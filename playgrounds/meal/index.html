@@ -1,0 +1,534 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>급식 먹고 놀자 - 수다쟁이 여니쌤의 뿜뿜 놀이터</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../../style.css">
+  <script src="../../script.js" defer></script>
+  <style>
+    .meal-main {
+      align-content: start;
+      gap: 14px;
+    }
+
+    .meal-panel {
+      border: 4px solid rgba(255, 255, 255, 0.92);
+      border-radius: 34px;
+      background: rgba(255, 253, 247, 0.88);
+      box-shadow: 0 14px 0 rgba(95, 114, 143, 0.1), 0 18px 34px rgba(95, 114, 143, 0.14);
+      padding: clamp(16px, 3vw, 26px);
+    }
+
+    .meal-steps {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 14px;
+    }
+
+    .meal-field {
+      display: grid;
+      gap: 8px;
+      color: var(--ink);
+      font-size: clamp(17px, 2vw, 22px);
+      font-weight: 900;
+    }
+
+    .meal-field input {
+      width: 100%;
+      min-height: 58px;
+      border: 3px solid var(--line);
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.92);
+      padding: 12px 15px;
+      color: var(--ink);
+      font: inherit;
+      font-size: clamp(18px, 2.2vw, 25px);
+    }
+
+    .meal-action {
+      min-height: 58px;
+      border: 0;
+      border-radius: 20px;
+      background: #ccecdf;
+      color: var(--ink);
+      box-shadow: 0 6px 0 rgba(95, 114, 143, 0.12);
+      font: inherit;
+      font-size: clamp(18px, 2.3vw, 26px);
+      font-weight: 1000;
+      cursor: pointer;
+    }
+
+    .meal-action:active,
+    .meal-menu-card:active {
+      transform: translateY(3px);
+      box-shadow: 0 3px 0 rgba(95, 114, 143, 0.12);
+    }
+
+    .school-results,
+    .meal-menu-grid {
+      display: grid;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .school-results {
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+
+    .school-card,
+    .meal-menu-card {
+      border: 3px solid rgba(255, 255, 255, 0.92);
+      border-radius: 24px;
+      background: rgba(247, 216, 228, 0.45);
+      color: var(--ink);
+      padding: 14px 16px;
+      text-align: left;
+      font: inherit;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 7px 0 rgba(95, 114, 143, 0.1);
+    }
+
+    .school-card strong,
+    .meal-menu-card strong {
+      display: block;
+      font-size: clamp(20px, 2.6vw, 30px);
+      line-height: 1.2;
+    }
+
+    .school-card small {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.35;
+    }
+
+    .meal-menu-grid {
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    }
+
+    .meal-menu-card {
+      min-height: 88px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      background: linear-gradient(145deg, #fff7df, #f2fbf6);
+    }
+
+    .meal-status {
+      min-height: 42px;
+      color: #5d6475;
+      font-size: clamp(17px, 2.1vw, 23px);
+      font-weight: 900;
+      line-height: 1.4;
+    }
+
+    .meal-selected-word {
+      display: grid;
+      place-items: center;
+      min-height: 92px;
+      margin-bottom: 10px;
+      border-radius: 28px;
+      background: #fff6dc;
+      color: #354052;
+      font-size: clamp(38px, 8vw, 82px);
+      font-weight: 1000;
+      line-height: 1.1;
+      text-align: center;
+      word-break: keep-all;
+    }
+
+    .meal-write-board {
+      position: relative;
+      width: 100%;
+      height: min(330px, 36dvh);
+      min-height: 230px;
+      border: 4px solid #9ccbdd;
+      border-radius: 30px;
+      background: #fff;
+      overflow: hidden;
+      touch-action: none;
+    }
+
+    .meal-guide-word {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      padding: 16px;
+      color: rgba(53, 64, 82, 0.13);
+      font-size: clamp(70px, 14vw, 160px);
+      font-weight: 1000;
+      line-height: 1;
+      text-align: center;
+      word-break: keep-all;
+      pointer-events: none;
+    }
+
+    .meal-write-board canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      touch-action: none;
+    }
+
+    .meal-write-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .meal-hidden {
+      display: none !important;
+    }
+
+    @media (max-width: 760px) {
+      .meal-steps {
+        grid-template-columns: 1fr;
+      }
+
+      .meal-menu-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .meal-panel {
+        border-radius: 26px;
+        padding: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="clouds"><span class="cloud one"></span><span class="cloud two"></span></div>
+  <div class="stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+
+  <div class="page-shell">
+    <header class="brand">
+      <a class="brand-mark" href="../../">
+        <img src="../../shared/images/yeni-teacher.png" alt="여니쌤 캐릭터">
+        <span>수다쟁이 여니쌤의 뿜뿜 놀이터</span>
+      </a>
+      <button class="malangi-helper" type="button" data-malangi-help data-malangi-message="오늘 급식에서 따라 써 보고 싶은 낱말을 골라 봐." aria-label="말랑이 도움말 열기">
+        <span class="helper-bubble" aria-hidden="true"></span>
+        <span class="helper-text">도움이 필요하면 눌러줘</span>
+      </button>
+    </header>
+
+    <main class="main meal-main">
+      <div class="section-head">
+        <div class="section-title">
+          <p class="kicker">급식 놀이터</p>
+          <h1>급식 먹고 놀자</h1>
+        </div>
+        <a class="back-link" href="../../">🏠 홈으로</a>
+      </div>
+
+      <section class="meal-panel" aria-label="학교와 날짜 고르기">
+        <div class="meal-steps">
+          <label class="meal-field">
+            학교를 찾아요
+            <input id="schoolInput" type="search" placeholder="예: 서울초등학교" autocomplete="off">
+          </label>
+          <label class="meal-field">
+            날짜를 골라요
+            <input id="mealDate" type="date">
+          </label>
+        </div>
+        <div class="meal-write-actions">
+          <button class="meal-action" type="button" id="schoolSearchButton">학교 찾기</button>
+          <button class="meal-action" type="button" id="mealSearchButton">급식 보기</button>
+        </div>
+        <p class="meal-status" id="status" aria-live="polite">학교 이름을 쓰고, 학교 찾기를 눌러 주세요.</p>
+        <div class="school-results" id="schoolResults"></div>
+      </section>
+
+      <section class="meal-panel meal-hidden" id="menuPanel" aria-label="급식 메뉴 고르기">
+        <p class="kicker" id="menuTitle">오늘의 급식</p>
+        <div class="meal-menu-grid" id="menuGrid"></div>
+      </section>
+
+      <section class="meal-panel meal-hidden" id="writePanel" aria-label="급식 메뉴 따라쓰기">
+        <p class="kicker">따라 써 봐요</p>
+        <div class="meal-selected-word" id="selectedWord">메뉴</div>
+        <div class="meal-write-board">
+          <div class="meal-guide-word" id="guideWord">메뉴</div>
+          <canvas id="traceCanvas"></canvas>
+        </div>
+        <div class="meal-write-actions">
+          <button class="meal-action" type="button" id="speakWordButton">🔊 낱말 듣기</button>
+          <button class="meal-action" type="button" id="clearCanvasButton">다시 쓰기</button>
+          <a class="back-link" href="../../">🏠 홈으로</a>
+        </div>
+        <p class="meal-status">잘하고 있어요. 천천히 끝까지 따라가 봐요.</p>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    let selectedSchool = null;
+    let selectedWord = "";
+    let canvas;
+    let context;
+    let isDrawing = false;
+
+    const schoolInput = document.getElementById("schoolInput");
+    const mealDate = document.getElementById("mealDate");
+    const statusEl = document.getElementById("status");
+    const schoolResults = document.getElementById("schoolResults");
+    const menuPanel = document.getElementById("menuPanel");
+    const menuTitle = document.getElementById("menuTitle");
+    const menuGrid = document.getElementById("menuGrid");
+    const writePanel = document.getElementById("writePanel");
+    const selectedWordEl = document.getElementById("selectedWord");
+    const guideWordEl = document.getElementById("guideWord");
+
+    mealDate.value = new Date().toISOString().slice(0, 10);
+
+    document.getElementById("schoolSearchButton").addEventListener("click", searchSchool);
+    document.getElementById("mealSearchButton").addEventListener("click", getMeal);
+    document.getElementById("clearCanvasButton").addEventListener("click", clearCanvas);
+    document.getElementById("speakWordButton").addEventListener("click", () => {
+      if (selectedWord) speakOnce(selectedWord);
+    });
+    schoolInput.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") searchSchool();
+    });
+
+    window.addEventListener("resize", resizeCanvas);
+    document.addEventListener("DOMContentLoaded", () => {
+      canvas = document.getElementById("traceCanvas");
+      context = canvas.getContext("2d");
+      resizeCanvas();
+      initPointerWriting();
+    });
+
+    function setStatus(message) {
+      statusEl.textContent = message;
+    }
+
+    async function searchSchool() {
+      const keyword = schoolInput.value.trim();
+      if (!keyword) {
+        setStatus("학교 이름을 먼저 써 주세요.");
+        return;
+      }
+
+      selectedSchool = null;
+      schoolResults.innerHTML = "";
+      menuPanel.classList.add("meal-hidden");
+      writePanel.classList.add("meal-hidden");
+      setStatus("학교를 찾고 있어요.");
+
+      try {
+        const url = "https://open.neis.go.kr/hub/schoolInfo"
+          + "?Type=xml&pIndex=1&pSize=20&SCHUL_NM=" + encodeURIComponent(keyword);
+        const xml = await fetchXml(url);
+        const rows = [...xml.querySelectorAll("row")];
+
+        if (!rows.length) {
+          setStatus("학교를 찾지 못했어요. 학교 이름을 조금 다르게 써 보세요.");
+          return;
+        }
+
+        rows.forEach((row) => {
+          const school = {
+            name: getText(row, "SCHUL_NM"),
+            region: getText(row, "ATPT_OFCDC_SC_NM"),
+            officeCode: getText(row, "ATPT_OFCDC_SC_CODE"),
+            schoolCode: getText(row, "SD_SCHUL_CODE"),
+            address: getText(row, "ORG_RDNMA"),
+            type: getText(row, "SCHUL_KND_SC_NM")
+          };
+
+          const button = document.createElement("button");
+          button.className = "school-card";
+          button.type = "button";
+          button.innerHTML = `
+            <strong>${school.name}</strong>
+            <small>${school.region} · ${school.type}</small>
+            <small>${school.address || ""}</small>
+          `;
+          button.addEventListener("click", () => selectSchool(school));
+          schoolResults.appendChild(button);
+        });
+
+        setStatus("내 학교를 골라 주세요.");
+      } catch (error) {
+        console.error(error);
+        setStatus("학교 정보를 불러오지 못했어요. 잠시 뒤 다시 해 주세요.");
+      }
+    }
+
+    function selectSchool(school) {
+      selectedSchool = school;
+      setStatus(`${school.name}을 골랐어요. 날짜를 고르고 급식 보기를 눌러 주세요.`);
+      speakOnce(`${school.name}을 골랐어요.`);
+    }
+
+    async function getMeal() {
+      if (!selectedSchool) {
+        setStatus("먼저 학교를 골라 주세요.");
+        return;
+      }
+
+      const dateValue = mealDate.value;
+      if (!dateValue) {
+        setStatus("날짜를 골라 주세요.");
+        return;
+      }
+
+      setStatus("급식 메뉴를 찾고 있어요.");
+      menuGrid.innerHTML = "";
+      writePanel.classList.add("meal-hidden");
+
+      try {
+        const ymd = dateValue.replaceAll("-", "");
+        const url = "https://open.neis.go.kr/hub/mealServiceDietInfo"
+          + "?Type=xml"
+          + "&ATPT_OFCDC_SC_CODE=" + selectedSchool.officeCode
+          + "&SD_SCHUL_CODE=" + selectedSchool.schoolCode
+          + "&MLSV_YMD=" + ymd;
+        const xml = await fetchXml(url);
+        const row = xml.querySelector("row");
+
+        if (!row) {
+          setStatus("이 날짜에는 급식 정보가 없어요. 다른 날짜를 골라 보세요.");
+          menuPanel.classList.add("meal-hidden");
+          return;
+        }
+
+        const menuItems = splitMenu(getText(row, "DDISH_NM"));
+        if (!menuItems.length) {
+          setStatus("보여 줄 메뉴를 찾지 못했어요.");
+          return;
+        }
+
+        menuTitle.textContent = `${formatDate(ymd)} 급식 메뉴`;
+        menuItems.forEach((item) => {
+          const button = document.createElement("button");
+          button.className = "meal-menu-card";
+          button.type = "button";
+          button.innerHTML = `<strong>${item}</strong>`;
+          button.addEventListener("click", () => openWriting(item));
+          menuGrid.appendChild(button);
+        });
+
+        menuPanel.classList.remove("meal-hidden");
+        setStatus("따라 써 보고 싶은 급식 메뉴를 눌러 주세요.");
+      } catch (error) {
+        console.error(error);
+        setStatus("급식 정보를 불러오지 못했어요. 잠시 뒤 다시 해 주세요.");
+      }
+    }
+
+    async function fetchXml(url) {
+      const response = await fetch(url);
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      const text = await response.text();
+      return new DOMParser().parseFromString(text, "text/xml");
+    }
+
+    function getText(parent, tagName) {
+      const element = parent.querySelector(tagName);
+      return element ? element.textContent.trim() : "";
+    }
+
+    function splitMenu(text) {
+      if (!text) return [];
+      return text
+        .replace(/<br\s*\/?>/gi, "\n")
+        .split("\n")
+        .map((item) => item.trim())
+        .filter(Boolean)
+        .map(cleanMenuName)
+        .filter(Boolean);
+    }
+
+    function cleanMenuName(text) {
+      return text
+        .replace(/\([0-9.,]+\)/g, "")
+        .replace(/\s+/g, " ")
+        .trim();
+    }
+
+    function formatDate(yyyymmdd) {
+      return `${yyyymmdd.slice(0, 4)}.${yyyymmdd.slice(4, 6)}.${yyyymmdd.slice(6, 8)}`;
+    }
+
+    function openWriting(word) {
+      selectedWord = word;
+      selectedWordEl.textContent = word;
+      guideWordEl.textContent = word;
+      writePanel.classList.remove("meal-hidden");
+      resizeCanvas();
+      clearCanvas();
+      speakOnce(word);
+      writePanel.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+
+    function resizeCanvas() {
+      if (!canvas || !context) return;
+      const rect = canvas.getBoundingClientRect();
+      const ratio = window.devicePixelRatio || 1;
+      canvas.width = Math.max(1, Math.floor(rect.width * ratio));
+      canvas.height = Math.max(1, Math.floor(rect.height * ratio));
+      context.setTransform(ratio, 0, 0, ratio, 0, 0);
+      context.lineCap = "round";
+      context.lineJoin = "round";
+      context.lineWidth = 14;
+      context.strokeStyle = "#5f7f95";
+    }
+
+    function clearCanvas() {
+      if (!canvas || !context) return;
+      context.clearRect(0, 0, canvas.width, canvas.height);
+    }
+
+    function initPointerWriting() {
+      canvas.addEventListener("pointerdown", startDrawing);
+      canvas.addEventListener("pointermove", draw);
+      canvas.addEventListener("pointerup", stopDrawing);
+      canvas.addEventListener("pointercancel", stopDrawing);
+      canvas.addEventListener("pointerleave", stopDrawing);
+    }
+
+    function getPoint(event) {
+      const rect = canvas.getBoundingClientRect();
+      return {
+        x: event.clientX - rect.left,
+        y: event.clientY - rect.top
+      };
+    }
+
+    function startDrawing(event) {
+      event.preventDefault();
+      canvas.setPointerCapture(event.pointerId);
+      isDrawing = true;
+      const point = getPoint(event);
+      context.beginPath();
+      context.moveTo(point.x, point.y);
+    }
+
+    function draw(event) {
+      if (!isDrawing) return;
+      event.preventDefault();
+      const point = getPoint(event);
+      context.lineTo(point.x, point.y);
+      context.stroke();
+    }
+
+    function stopDrawing(event) {
+      if (!isDrawing) return;
+      event.preventDefault();
+      isDrawing = false;
+      context.closePath();
+    }
+  </script>
+</body>
+</html>

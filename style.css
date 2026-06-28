@@ -359,6 +359,50 @@ h1 {
   background: linear-gradient(145deg, #d7eaf5, #f2f9fc);
 }
 
+.meal {
+  background: linear-gradient(145deg, #f5ddc8, #fff7e8);
+}
+
+.home-grid-wide {
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+}
+
+.prop-meal {
+  left: 22%;
+  bottom: 15px;
+  width: 76px;
+  height: 54px;
+  border-radius: 18px;
+  background: #fff3d8;
+  border: 4px solid rgba(255, 255, 255, 0.86);
+  box-shadow: inset 0 -8px 0 rgba(166, 126, 72, 0.08);
+}
+
+.prop-meal::before {
+  content: "";
+  position: absolute;
+  left: 10px;
+  top: 12px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #ccecdf;
+  box-shadow: 21px 0 #f7d8e4, 42px 0 #d7eaf5;
+}
+
+.prop-meal::after {
+  content: "";
+  position: absolute;
+  right: -12px;
+  top: -18px;
+  width: 7px;
+  height: 48px;
+  border-radius: 999px;
+  background: #9f8a70;
+  box-shadow: 10px 0 #9f8a70;
+  transform: rotate(18deg);
+}
+
 .malangi-helper {
   display: inline-flex;
   align-items: center;
