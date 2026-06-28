@@ -8,87 +8,83 @@
   <link rel="stylesheet" href="./style.css">
   <script src="./script.js" defer></script>
 </head>
-<body>
-  <div class="clouds">
-    <span class="cloud one"></span>
-    <span class="cloud two"></span>
-  </div>
-  <div class="stars">
-    <span class="star">★</span>
-    <span class="star">★</span>
-    <span class="star">★</span>
-  </div>
-
-  <div class="page-shell">
-    <header class="brand home-brand" aria-label="브랜드">
-      <a class="brand-mark" href="./" aria-label="시작 화면으로">
+<body class="ios-home-page">
+  <div class="ios-home-shell">
+    <header class="ios-home-top" aria-label="브랜드">
+      <a class="ios-brand" href="./" aria-label="홈">
         <img src="./shared/images/yeni-teacher.png" alt="여니쌤 캐릭터">
         <span>수다쟁이 여니쌤의 뿜뿜 놀이터</span>
       </a>
-      <button class="malangi-helper" type="button" data-malangi-help data-malangi-message="그림을 보고 마음에 드는 놀이터를 눌러 봐." aria-label="말랑이 도움말 열기">
+      <button
+        class="malangi-helper ios-helper"
+        type="button"
+        data-malangi-help
+        data-malangi-message="오늘은 무엇을 해 볼까요? 마음에 드는 카드를 눌러 봐."
+        aria-label="말랑이 도움말 열기"
+      >
         <span class="helper-bubble" aria-hidden="true"></span>
-        <span class="helper-text">도움이 필요하면 눌러줘</span>
+        <span class="helper-text">도움</span>
       </button>
     </header>
 
-    <main class="main home-main">
-      <section class="hero-copy home-hero">
-        <h1>오늘은 어디로 놀러 갈까요?</h1>
-        <p class="slogan">놀면서 배우고,<br>배우면서 자신감이 뿜뿜!</p>
+    <main class="ios-home-main">
+      <section class="ios-home-title" aria-labelledby="home-title">
+        <p class="ios-kicker">놀면서 배우는 하루</p>
+        <h1 id="home-title">오늘은 무엇을 해 볼까요?</h1>
       </section>
 
-      <nav class="playground-grid home-grid-wide" aria-label="놀이터 메뉴">
-        <a class="jelly-button book" href="./playgrounds/book/">
-          <span class="malangi-card malangi-book" aria-hidden="true">
-            <span class="malangi-face"></span>
-            <span class="prop prop-book"></span>
-          </span>
+      <nav class="ios-app-grid" aria-label="놀이터 메뉴">
+        <a class="ios-app-card ios-book" href="./playgrounds/book/">
+          <span class="ios-app-icon" aria-hidden="true">📚</span>
           <strong>책 놀이터</strong>
         </a>
-        <a class="jelly-button meal" href="./playgrounds/meal/">
-          <span class="malangi-card malangi-meal" aria-hidden="true">
-            <span class="malangi-face"></span>
-            <span class="prop prop-meal"></span>
-          </span>
+        <a class="ios-app-card ios-meal" href="./playgrounds/meal/">
+          <span class="ios-app-icon" aria-hidden="true">🍱</span>
           <strong>급식 먹고 놀자</strong>
         </a>
-        <a class="jelly-button economy" href="./playgrounds/economy/">
-          <span class="malangi-card malangi-economy" aria-hidden="true">
-            <span class="malangi-face"></span>
-            <span class="prop prop-money"></span>
-          </span>
+        <a class="ios-app-card ios-economy" href="./playgrounds/economy/">
+          <span class="ios-app-icon" aria-hidden="true">💰</span>
           <strong>경제 놀이터</strong>
         </a>
-        <a class="jelly-button hangul" href="./playgrounds/hangul/">
-          <span class="malangi-card malangi-hangul" aria-hidden="true">
-            <span class="malangi-face"></span>
-            <span class="prop prop-pencil"></span>
-          </span>
+        <a class="ios-app-card ios-hangul" href="./playgrounds/hangul/">
+          <span class="ios-app-icon" aria-hidden="true">🔤</span>
           <strong>한글 놀이터</strong>
         </a>
-        <a class="jelly-button number" href="./playgrounds/number/">
-          <span class="malangi-card malangi-number" aria-hidden="true">
-            <span class="malangi-face"></span>
-            <span class="prop prop-blocks"></span>
-          </span>
+        <a class="ios-app-card ios-number" href="./playgrounds/number/">
+          <span class="ios-app-icon" aria-hidden="true">🔢</span>
           <strong>숫자 놀이터</strong>
         </a>
-        <a class="jelly-button social" href="./playgrounds/social/">
-          <span class="malangi-card malangi-social" aria-hidden="true">
-            <span class="malangi-face"></span>
-            <span class="friend-face"></span>
-          </span>
-          <strong>사회성 놀이터</strong>
-        </a>
-        <a class="jelly-button life" href="./playgrounds/life/">
-          <span class="malangi-card malangi-life" aria-hidden="true">
-            <span class="malangi-face"></span>
-            <span class="prop prop-toothbrush"></span>
-          </span>
+        <a class="ios-app-card ios-life" href="./playgrounds/life/">
+          <span class="ios-app-icon" aria-hidden="true">🏠</span>
           <strong>생활 놀이터</strong>
         </a>
       </nav>
+
+      <section class="ios-home-note" aria-label="말랑이 안내">
+        <span class="ios-note-cloud" aria-hidden="true"></span>
+        <div>
+          <strong>원하는 놀이터를 골라서 시작해요.</strong>
+          <p>천천히 보고, 마음에 드는 카드를 눌러 봐요.</p>
+        </div>
+      </section>
     </main>
+
+    <nav class="ios-tabbar" aria-label="하단 메뉴">
+      <a class="ios-tab is-active" href="./" aria-label="홈">
+        <span aria-hidden="true">⌂</span>
+        <strong>홈</strong>
+      </a>
+      <button class="ios-tab" type="button" data-soon-message="곧 만나요! 준비 중이에요." aria-label="내 활동">
+        <span aria-hidden="true">♡</span>
+        <strong>내 활동</strong>
+      </button>
+      <button class="ios-tab" type="button" data-soon-message="곧 만나요! 준비 중이에요." aria-label="설정">
+        <span aria-hidden="true">⚙</span>
+        <strong>설정</strong>
+      </button>
+    </nav>
+
+    <p class="ios-soon-message" data-soon-output aria-live="polite"></p>
   </div>
 </body>
 </html>
