@@ -7,42 +7,70 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="../../style.css">
   <script src="../../script.js" defer></script>
+  <style>
+    .book-list {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .book-card {
+      text-decoration: none;
+    }
+
+    .book-card-icon {
+      font-size: clamp(48px, 7vw, 76px);
+      line-height: 1;
+    }
+
+    @media (max-width: 920px) {
+      .book-list {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 <body>
   <div class="clouds">
     <span class="cloud one"></span>
     <span class="cloud two"></span>
   </div>
-  <div class="stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+  <div class="stars"><span class="star">⭐</span><span class="star">✦</span><span class="star">⭐</span></div>
   <div class="page-shell">
     <header class="brand">
       <a class="brand-mark" href="../../">
         <img src="../../shared/images/yeni-teacher.png" alt="여니쌤 캐릭터">
         <span>수다쟁이 여니쌤의 뿜뿜 놀이터</span>
       </a>
-      <button class="malangi-helper" type="button" data-malangi-message="읽고 싶은 책을 하나 골라 봐." aria-label="말랑이 도움말 듣기">
+      <button class="malangi-helper" type="button" data-malangi-message="읽고 싶은 책을 하나 골라 봐." aria-label="말랑이 도움말 열기">
         <span class="helper-bubble" aria-hidden="true"></span>
-        <span class="helper-text">도움이 필요하면 눌러줘</span>
+        <span class="helper-text">도움</span>
       </button>
     </header>
     <main class="main">
       <div class="section-head">
         <div class="section-title">
           <p class="kicker">책 놀이터</p>
-          <h1>책을 읽고 표현해요</h1>
+          <h1>책을 고르고 활동해요</h1>
         </div>
         <a class="back-link" href="../../">메인으로</a>
       </div>
-      <section class="book-list">
+      <section class="book-list" aria-label="책 활동 목록">
         <a class="book-card" href="../../books/ppajida/">
           <span class="badge">바로 하기</span>
+          <span class="book-card-icon" aria-hidden="true">📚</span>
           <strong>빠질 때가 됐어</strong>
-          <small>읽고, 말하고, 쓰고, 몸으로 표현하는 책 활동입니다.</small>
+          <small>읽고, 말하고, 쓰고, 놀이로 표현해요.</small>
+        </a>
+        <a class="book-card" href="../../books/swaaaa/">
+          <span class="badge">새 활동</span>
+          <span class="book-card-icon" aria-hidden="true">🌧️</span>
+          <strong>쏴아아아</strong>
+          <small>소리를 보고, 듣고, 손가락으로 그려요.</small>
         </a>
         <article class="book-card">
           <span class="badge">곧 만나요!</span>
-          <strong>새 책 활동</strong>
-          <small>책의 핵심 개념에 맞는 활동으로 다음 단계에서 추가됩니다.</small>
+          <span class="book-card-icon" aria-hidden="true">🌱</span>
+          <strong>다음 그림책</strong>
+          <small>이 놀이터는 천천히 준비하고 있어요.</small>
         </article>
       </section>
     </main>
