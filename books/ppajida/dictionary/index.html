@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>말랑 낱말사전 - 빠질 때가 됐어</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../../../style.css">
+  <script src="../../../script.js" defer></script>
+  <script src="./dictionary.js" defer></script>
+</head>
+<body class="dictionary-page">
+  <div class="clouds no-print"><span class="cloud one"></span><span class="cloud two"></span></div>
+  <div class="page-shell dictionary-shell">
+    <header class="brand no-print">
+      <a class="brand-mark" href="../../../">
+        <img src="../../../shared/images/yeni-teacher.png" alt="여니쌤 캐릭터">
+        <span>수다쟁이 여니쌤의 뿜뿜 놀이터</span>
+      </a>
+      <button class="malangi-helper" type="button" data-malangi-message="같은 말도 상황에 따라 뜻이 달라질 수 있어." aria-label="말랑이 도움말 듣기">
+        <span class="helper-bubble" aria-hidden="true"></span>
+        <span class="helper-text">도움이 필요하면 눌러줘</span>
+      </button>
+    </header>
+
+    <main class="dictionary-main">
+      <nav class="book-nav no-print" aria-label="이동">
+        <a class="back-link" href="../">책 활동 홈</a>
+        <a class="back-link" href="../../../playgrounds/book/">책 놀이터로</a>
+      </nav>
+
+      <section class="dictionary-heading no-print">
+        <p class="kicker">『빠질 때가 됐어』</p>
+        <h1>말랑 낱말사전</h1>
+        <p>‘빠지다’의 여러 뜻을 천천히 살펴봐요.</p>
+      </section>
+
+      <section class="dictionary-viewer no-print" aria-live="polite">
+        <article class="dictionary-card">
+          <div class="dictionary-card-top">
+            <span class="dictionary-count" data-dictionary-count>1 / 13</span>
+            <span class="dictionary-label">오늘의 표현</span>
+          </div>
+          <h2 data-dictionary-expression></h2>
+          <dl class="dictionary-details">
+            <div>
+              <dt>뜻</dt>
+              <dd data-dictionary-meaning></dd>
+            </div>
+            <div>
+              <dt>쉬운 말</dt>
+              <dd data-dictionary-easy></dd>
+            </div>
+            <div>
+              <dt>예문</dt>
+              <dd data-dictionary-example></dd>
+            </div>
+            <div class="dictionary-think">
+              <dt>생각해 봐요</dt>
+              <dd data-dictionary-think></dd>
+            </div>
+          </dl>
+          <button class="dictionary-listen" type="button" data-dictionary-listen>🔊 뜻 듣기</button>
+        </article>
+
+        <div class="dictionary-controls">
+          <button type="button" data-dictionary-prev>← 이전</button>
+          <button class="dictionary-print" type="button" onclick="window.print()">🖨️ 인쇄하기 · PDF 저장</button>
+          <button type="button" data-dictionary-next>다음 →</button>
+        </div>
+      </section>
+
+      <section class="dictionary-print-list" data-dictionary-print aria-label="빠지다 낱말사전 인쇄 자료"></section>
+    </main>
+  </div>
+</body>
+</html>

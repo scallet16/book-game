@@ -1,0 +1,39 @@
+{
+  "id": "ppajida",
+  "title": "빠질 때가 됐어",
+  "author": "홍주연",
+  "publisher": "비룡소",
+  "bookType": "text-picture",
+  "playground": "book",
+  "status": "published",
+  "activitySections": [
+    {
+      "id": "game",
+      "label": "놀이 활동",
+      "enabled": true,
+      "href": "./game/",
+      "icon": "🎮"
+    },
+    {
+      "id": "write",
+      "label": "쓰기 활동",
+      "enabled": true,
+      "href": "./write/",
+      "icon": "✏️"
+    },
+    {
+      "id": "speak",
+      "label": "읽고 말하기",
+      "enabled": true,
+      "href": "./speak/",
+      "icon": "🎤"
+    },
+    {
+      "id": "dictionary",
+      "label": "말랑 낱말사전",
+      "enabled": true,
+      "href": "./dictionary/",
+      "icon": "📚"
+    }
+  ]
+}

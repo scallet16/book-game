@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>관리자 - 수다쟁이 여니쌤의 뿜뿜 놀이터</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../style.css">
+  <script src="../script.js" defer></script>
+</head>
+<body>
+  <div class="page-shell">
+    <header class="brand">
+      <img src="../shared/images/yeni-teacher.png" alt="여니쌤 캐릭터">
+      <span>수다쟁이 여니쌤의 뿜뿜 놀이터</span>
+    </header>
+    <main class="main admin-main">
+      <section class="admin-card" data-admin-locked>
+        <p class="kicker">관리자 모드</p>
+        <h1>비밀번호를 입력해 주세요</h1>
+        <p class="subtitle">1차 MVP에서는 실제 로그인 서버 없이 데모 비밀번호만 확인합니다.</p>
+        <label>
+          비밀번호
+          <input data-admin-password type="password" placeholder="teacher1234" autocomplete="current-password">
+        </label>
+        <button class="primary-button" type="button" onclick="unlockAdmin()">관리자 화면 열기</button>
+        <p class="kicker" data-admin-error aria-live="polite"></p>
+      </section>
+
+      <section class="admin-card hidden" data-admin-panel>
+        <p class="kicker">TODO 관리자 화면</p>
+        <h1>책 활동 만들기</h1>
+        <div class="notice">Firebase 연결 전이라 저장, 수정, 삭제, QR 생성은 아직 실제로 동작하지 않습니다.</div>
+        <form onsubmit="showAdminPreview(event)">
+          <label>책 제목 <input name="title" placeholder="예: 빠질 때가 됐어"></label>
+          <label>작가 <input name="author" placeholder="작가 이름"></label>
+          <label>출판사 <input name="publisher" placeholder="출판사"></label>
+          <label>핵심 지도 내용 <textarea name="guide" placeholder="수업에서 지도할 핵심 내용을 적어 주세요."></textarea></label>
+          <label>넣고 싶은 활동
+            <select name="activity">
+              <option>낱말 찾기</option>
+              <option>생각 고르기</option>
+              <option>따라 쓰기</option>
+              <option>그림 보고 말하기</option>
+            </select>
+          </label>
+          <label>공개 설정
+            <select name="visibility">
+              <option>비공개</option>
+              <option>공개</option>
+            </select>
+          </label>
+          <button class="primary-button" type="submit">활동 링크 미리보기</button>
+        </form>
+        <div style="margin-top:16px" data-admin-result></div>
+        <div class="todo-panel" style="margin-top:18px; min-height:180px">
+          <div class="big-icon">▦</div>
+          <p>QR코드 생성 영역과 기존 책 수정/삭제 목록이 들어올 자리입니다.</p>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

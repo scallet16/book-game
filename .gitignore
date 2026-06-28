@@ -1,0 +1,4 @@
+work/*.log
+work/activity-script-check.js
+.codex/
+.agents/

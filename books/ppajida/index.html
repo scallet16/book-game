@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>빠질 때가 됐어 - 수다쟁이 여니쌤의 뿜뿜 놀이터</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../../style.css">
+  <script src="../../script.js" defer></script>
+</head>
+<body>
+  <div class="clouds"><span class="cloud one"></span><span class="cloud two"></span></div>
+  <div class="page-shell">
+    <header class="brand">
+      <a class="brand-mark" href="../../">
+        <img src="../../shared/images/yeni-teacher.png" alt="여니쌤 캐릭터">
+        <span>수다쟁이 여니쌤의 뿜뿜 놀이터</span>
+      </a>
+      <button class="malangi-helper" type="button" data-malangi-message="오늘 하고 싶은 활동을 골라 봐." aria-label="말랑이 도움말 듣기">
+        <span class="helper-bubble" aria-hidden="true"></span>
+        <span class="helper-text">도움이 필요하면 눌러줘</span>
+      </button>
+    </header>
+    <main class="main book-home-main">
+      <nav class="book-nav" aria-label="이동">
+        <a class="back-link" href="../../">홈으로</a>
+        <a class="back-link" href="../../playgrounds/book/">책 놀이터로</a>
+      </nav>
+      <section class="book-hero">
+        <p class="kicker">홍주연 · 비룡소</p>
+        <h1>『빠질 때가 됐어』</h1>
+        <p class="slogan">오늘은 무엇을 해 볼까요?</p>
+      </section>
+      <nav class="activity-home-grid" aria-label="책 활동 선택" data-book-id="ppajida" data-book-type="text-picture">
+        <a class="activity-area-card game-card" href="./game/" data-section-id="game">
+          <span class="activity-icon">🎮</span>
+          <strong>놀이 활동</strong>
+        </a>
+        <a class="activity-area-card write-card" href="./write/" data-section-id="write">
+          <span class="activity-icon">✏️</span>
+          <strong>쓰기 활동</strong>
+        </a>
+        <a class="activity-area-card speak-card" href="./speak/" data-section-id="speak">
+          <span class="activity-icon">🎤</span>
+          <strong>읽고 말하기</strong>
+        </a>
+        <a class="activity-area-card dictionary-card" href="./dictionary/" data-section-id="dictionary">
+          <span class="activity-icon">📚</span>
+          <strong>말랑 낱말사전</strong>
+        </a>
+      </nav>
+    </main>
+  </div>
+</body>
+</html>

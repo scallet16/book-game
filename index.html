@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>수다쟁이 여니쌤의 뿜뿜 놀이터</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="./style.css">
+  <script src="./script.js" defer></script>
+</head>
+<body>
+  <div class="clouds">
+    <span class="cloud one"></span>
+    <span class="cloud two"></span>
+  </div>
+  <div class="stars">
+    <span class="star">★</span>
+    <span class="star">★</span>
+    <span class="star">★</span>
+  </div>
+
+  <div class="page-shell">
+    <header class="brand home-brand" aria-label="브랜드">
+      <a class="brand-mark" href="./" aria-label="홈">
+        <img src="./shared/images/yeni-teacher.png" alt="여니쌤 캐릭터">
+        <span>수다쟁이 여니쌤의 뿜뿜 놀이터</span>
+      </a>
+      <button class="malangi-helper" type="button" data-malangi-help data-malangi-message="그림을 보고 마음에 드는 놀이터를 눌러 봐." aria-label="말랑이 도움말 듣기">
+        <span class="helper-bubble" aria-hidden="true"></span>
+        <span class="helper-text">도움이 필요하면 눌러줘</span>
+      </button>
+    </header>
+
+    <main class="main home-main">
+      <section class="hero-copy home-hero">
+        <h1>오늘은 어디로 놀러 갈까요?</h1>
+        <p class="slogan">놀면서 배우고,<br>배우면서 자신감이 뿜뿜!</p>
+      </section>
+
+      <nav class="playground-grid" aria-label="놀이터 메뉴">
+        <a class="jelly-button book" href="./playgrounds/book/">
+          <span class="malangi-card malangi-book" aria-hidden="true">
+            <span class="malangi-face"></span>
+            <span class="prop prop-book"></span>
+          </span>
+          <strong>책 놀이터</strong>
+        </a>
+        <a class="jelly-button economy" href="./playgrounds/economy/">
+          <span class="malangi-card malangi-economy" aria-hidden="true">
+            <span class="malangi-face"></span>
+            <span class="prop prop-money"></span>
+          </span>
+          <strong>경제 놀이터</strong>
+        </a>
+        <a class="jelly-button hangul" href="./playgrounds/hangul/">
+          <span class="malangi-card malangi-hangul" aria-hidden="true">
+            <span class="malangi-face"></span>
+            <span class="prop prop-pencil"></span>
+          </span>
+          <strong>한글 놀이터</strong>
+        </a>
+        <a class="jelly-button number" href="./playgrounds/number/">
+          <span class="malangi-card malangi-number" aria-hidden="true">
+            <span class="malangi-face"></span>
+            <span class="prop prop-blocks"></span>
+          </span>
+          <strong>숫자 놀이터</strong>
+        </a>
+        <a class="jelly-button social" href="./playgrounds/social/">
+          <span class="malangi-card malangi-social" aria-hidden="true">
+            <span class="malangi-face"></span>
+            <span class="friend-face"></span>
+          </span>
+          <strong>사회성 놀이터</strong>
+        </a>
+        <a class="jelly-button life" href="./playgrounds/life/">
+          <span class="malangi-card malangi-life" aria-hidden="true">
+            <span class="malangi-face"></span>
+            <span class="prop prop-toothbrush"></span>
+          </span>
+          <strong>생활 놀이터</strong>
+        </a>
+      </nav>
+    </main>
+  </div>
+</body>
+</html>

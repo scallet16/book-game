@@ -1,0 +1,578 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+<title>빠져빠져 연구소 v6</title>
+<style>
+:root{--bg:#fffdf8;--ink:#333c45;--muted:#65757d;--line:#dbeaf2;--mint:#c9f0e6;--mint2:#effffa;--pink:#ffd4e3;--yellow:#ffe7a8;--blue:#d8edff;--green:#d8f4dc;--lav:#efe8ff;--accent:#71d6c9;--shadow:rgba(70,105,120,.16)}
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden}body{font-family:Pretendard,"Noto Sans KR",system-ui,sans-serif;color:var(--ink);background:linear-gradient(135deg,#f7fcff,#fff6fa)}.app{width:100vw;height:100dvh;max-width:1150px;margin:0 auto;background:var(--bg);padding:10px;overflow:hidden}.top{height:78px;display:flex;justify-content:space-between;align-items:flex-start;gap:8px}.brand-small{display:flex;align-items:center;gap:5px;font-size:14px;font-weight:900;color:#75848b;line-height:1}.brand-small img{width:18px;height:18px;border-radius:50%;object-fit:cover;border:1.5px solid white;box-shadow:0 2px 5px var(--shadow)}.main-title{font-size:clamp(31px,5.2vw,52px);font-weight:1000;letter-spacing:-.065em;line-height:1.02}.bookline{font-size:14px;color:#687982;font-weight:850;margin-top:4px}.malangi{display:flex;align-items:center;gap:8px;border:3px solid var(--mint);background:var(--mint2);border-radius:999px;padding:6px 11px;box-shadow:0 5px 0 var(--shadow);font-size:16px;font-weight:1000}.cloud{width:42px;height:30px;background:#fff;border:3px solid #bde9f4;border-radius:22px;position:relative;flex:0 0 auto}.cloud:before,.cloud:after{content:"";position:absolute;background:#fff;border:3px solid #bde9f4;border-bottom:0;border-radius:50%}.cloud:before{width:20px;height:20px;left:4px;top:-12px}.cloud:after{width:24px;height:24px;right:5px;top:-15px}.face{position:absolute;left:10px;top:8px;z-index:2;font-size:13px}.speech{position:absolute;right:16px;top:86px;z-index:40;max-width:330px;background:white;border:3px solid var(--mint);border-radius:24px;padding:14px;font-size:20px;font-weight:900;line-height:1.35;box-shadow:0 12px 28px var(--shadow)}.hidden{display:none!important}.screen{height:calc(100dvh - 98px);display:none;overflow:hidden;padding:8px 8px 52px}.screen.active{display:flex;flex-direction:column;align-items:center;justify-content:center}h1{font-size:clamp(38px,7vw,70px);margin:8px 0 14px;line-height:1.08;letter-spacing:-.065em;text-align:center}h2{font-size:clamp(31px,5.2vw,54px);margin:8px 0 14px;line-height:1.15;letter-spacing:-.055em;text-align:center}.sub{font-size:clamp(18px,2.6vw,28px);font-weight:900;color:#5e707a;text-align:center;line-height:1.35;margin:4px 0 12px}button{border:0;border-radius:24px;padding:14px 18px;min-height:64px;font-size:clamp(19px,2.7vw,28px);font-weight:1000;color:var(--ink);background:var(--yellow);box-shadow:0 7px 0 var(--shadow);cursor:pointer;touch-action:manipulation}button:active{transform:translateY(3px);box-shadow:0 3px 0 var(--shadow)}button:disabled{opacity:.65}.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;width:min(940px,94vw)}.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;width:min(880px,94vw)}.bigmenu{height:190px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;min-width:0}.bigmenu .emoji{font-size:42px}.bigmenu .name{font-size:clamp(27px,4.6vw,48px);font-weight:1000;letter-spacing:-.055em}.bigmenu .desc{font-size:clamp(14px,2vw,20px);font-weight:850;color:#65757d;margin-top:6px}.card{width:min(980px,95vw);background:rgba(255,255,255,.96);border:3px solid var(--line);border-radius:30px;padding:16px;box-shadow:0 12px 28px rgba(80,132,150,.10)}.topbar{width:min(980px,95vw);display:flex;gap:10px;align-items:center;margin-bottom:8px}.progress{height:16px;background:#edf7fb;border-radius:999px;overflow:hidden;flex:1}.bar{height:100%;background:var(--accent);width:0;border-radius:999px;transition:.25s}.count{font-size:16px;font-weight:1000;color:#687982;min-width:54px;text-align:right}.soft{background:var(--blue);font-size:19px;min-height:50px;padding:10px 16px}.pink{background:var(--pink)}.green{background:var(--green)}.mint{background:var(--mint2)}.lav{background:var(--lav)}.danger{background:#ff90ad;color:white}.footer{display:flex;gap:10px;align-items:center;justify-content:center;flex-wrap:wrap;margin-top:10px}.feedback{height:44px;text-align:center;font-size:clamp(22px,3.1vw,34px);font-weight:1000;margin-top:8px}.hero{width:min(1020px,96vw);border-radius:38px;background:white;border:3px solid var(--line);padding:34px 34px;text-align:center;box-shadow:0 14px 28px var(--shadow)}.book-title{font-size:clamp(32px,6vw,64px);font-weight:1000;letter-spacing:-.06em;margin:8px 0}.choice{background:white;border:3px solid var(--line);box-shadow:none;text-align:center;min-height:76px}.choice.correct{background:var(--green);border-color:#9ddfad}.choice.wrong{background:var(--pink);border-color:#ffadc9}.scene{height:150px;display:grid;place-items:center;margin:0 auto 4px}
+.icon-road{width:190px;height:136px;background:#555;border-radius:24px;position:relative;overflow:hidden;border-top:42px solid #bfe8ff}.icon-road:before{content:"";position:absolute;left:91px;top:5px;width:8px;height:88px;background:repeating-linear-gradient(#fff 0 14px,transparent 14px 28px)}.car{position:absolute;width:50px;height:34px;border-radius:12px;background:#ffd45a;bottom:13px;left:70px;transition:.25s;box-shadow:0 4px 0 rgba(0,0,0,.12)}.car:after{content:"";position:absolute;right:5px;top:8px;width:13px;height:10px;background:#fff;border-radius:3px}.heart{width:100px;height:90px;position:relative;transform:rotate(-45deg);background:#ffd0df;border-radius:20px;margin-top:28px}.heart:before,.heart:after{content:"";position:absolute;width:100px;height:100px;border-radius:50%;background:#ffd0df}.heart:before{top:-50px;left:0}.heart:after{left:50px;top:0}.moon{width:124px;height:124px;border-radius:50%;background:#f3e8a2;position:relative}.moon:after{content:"";position:absolute;right:4px;top:-2px;width:116px;height:116px;border-radius:50%;background:white}.hole{width:142px;height:80px;border-radius:50%;background:radial-gradient(ellipse,#8799a3 0,#b9cbd2 45%,#e8f2f6 46%,#fff 70%);position:relative}.hole:after{content:"";position:absolute;left:50px;top:-58px;width:40px;height:73px;background:#ffe9a8;border-radius:20px;transform:rotate(10deg)}.water{width:160px;height:110px;background:#cfe8ff;border-radius:32px;position:relative;overflow:hidden}.water:before{content:"";position:absolute;left:-20px;top:26px;width:210px;height:38px;background:white;border-radius:50%;opacity:.65}.energy{width:140px;height:98px;background:#d9e1e6;border-radius:42px 42px 25px 25px;position:relative;transform:rotate(7deg)}.energy:before{content:"";position:absolute;left:42px;top:30px;width:56px;height:15px;border-radius:99px;background:#7f8f98}.energy:after{content:"";position:absolute;left:49px;top:58px;width:42px;height:8px;border-radius:99px;background:#94a1a8}.laugh{width:126px;height:126px;background:#ffe9a8;border-radius:50%;position:relative}.laugh:before{content:"";position:absolute;left:31px;top:41px;width:18px;height:18px;border-radius:50%;background:#556169;box-shadow:47px 0 #556169}.laugh:after{content:"";position:absolute;left:34px;top:76px;width:60px;height:26px;border-radius:0 0 80px 80px;background:#ff91b5}.think{width:145px;height:98px;background:#f5f0ff;border-radius:55px;position:relative;border:5px solid #dcd2fa}.think:after{content:"?";position:absolute;inset:0;display:grid;place-items:center;font-size:68px;font-weight:1000;color:#8b7db9}.wait{width:116px;height:116px;border-radius:50%;background:white;border:9px solid #cfe8ff;position:relative}.wait:before{content:"";position:absolute;left:51px;top:21px;width:8px;height:41px;background:#64757d;border-radius:99px}.wait:after{content:"";position:absolute;left:54px;top:54px;width:38px;height:7px;background:#64757d;border-radius:99px;transform-origin:left;transform:rotate(32deg)}.stick{width:170px;height:150px;position:relative;margin:auto}.stick .head{position:absolute;left:65px;top:4px;width:42px;height:42px;border-radius:50%;background:#ffe8a8;border:4px solid #58666e}.stick .body{position:absolute;left:83px;top:45px;width:7px;height:50px;background:#58666e;border-radius:99px}.stick .arm{position:absolute;left:42px;top:58px;width:86px;height:7px;background:#58666e;border-radius:99px;transform:rotate(var(--a,0deg))}.stick .leg1,.stick .leg2{position:absolute;left:83px;top:90px;width:7px;height:56px;background:#58666e;border-radius:99px;transform-origin:top}.stick .leg1{transform:rotate(28deg)}.stick .leg2{transform:rotate(-28deg)}.hintbox{border:3px dashed #9dd3f1;border-radius:24px;background:#f4fbff;padding:12px;margin:10px auto;max-width:620px}.write-board{width:min(820px,95vw);height:min(390px,48dvh);background:white;border:4px solid #8cc8f4;border-radius:28px;position:relative;margin:8px auto;overflow:hidden}.write-cells{position:absolute;inset:0;display:grid}.write-cell{display:grid;place-items:center;border-right:2px solid #d5e8f8;position:relative}.write-cell:before,.write-cell:after{content:"";position:absolute;background:#d5e8f8;opacity:.8}.write-cell:before{left:50%;top:0;width:2px;height:100%}.write-cell:after{left:0;top:50%;height:2px;width:100%}.write-cell span{font-size:clamp(118px,22vw,210px);font-weight:1000;color:rgba(57,65,72,.15);z-index:1;line-height:1}.write-cell.sentence span{font-size:clamp(50px,9vw,92px)}.write-board canvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none}.keyboard{display:grid;grid-template-columns:repeat(10,1fr);gap:7px;width:min(880px,95vw);margin:8px auto;background:#eef3f6;border-radius:22px;padding:10px}.key{min-height:52px;padding:6px;background:white;border-radius:14px;box-shadow:0 5px 0 #d8e0e5;font-size:clamp(20px,3vw,32px)}.key.wide{grid-column:span 3}.key.space{grid-column:span 4}.key.enter{background:var(--mint)}.key.del{background:#ffc5d2;color:#b93650}.inputline{min-height:74px;width:min(760px,94vw);border:4px dashed #ff9dba;background:#fff7fa;border-radius:22px;margin:6px auto 10px;padding:10px;font-size:clamp(34px,6vw,58px);font-weight:1000;text-align:center}.drop-zone{display:inline-flex;align-items:center;justify-content:center;min-width:150px;height:72px;border:4px dashed #ff9dba;border-radius:22px;background:#fff4f7;color:#ff74a0;font-size:36px;font-weight:1000}.audio{width:min(520px,90vw);margin:8px auto;display:block}@media(max-width:760px){.app{padding:8px}.top{height:84px}.brand-small{font-size:12px}.main-title{font-size:30px}.bookline{font-size:12px;max-width:260px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.malangi span.label{display:none}.screen{height:calc(100dvh - 102px);padding:5px 3px 50px}.grid3,.grid2{grid-template-columns:1fr;gap:9px}.bigmenu{height:116px}.bigmenu .emoji{font-size:27px}.bigmenu .name{font-size:30px}.bigmenu .desc{font-size:15px}.card{padding:10px;border-radius:24px}.scene{height:105px}.choice{min-height:57px}h1{font-size:37px}h2{font-size:30px}.sub{font-size:18px}.feedback{height:34px;font-size:22px}.write-board{height:260px}.write-cell span{font-size:118px}.write-cell.sentence span{font-size:48px}.keyboard{grid-template-columns:repeat(6,1fr);gap:6px;padding:8px}.key{min-height:45px;font-size:22px}.key.space{grid-column:span 3}.key.wide{grid-column:span 2}}
+
+/* v7 draggable lane game */
+.lane-game{width:min(820px,92vw);height:300px;margin:8px auto 6px;position:relative;border-radius:28px;overflow:hidden;background:linear-gradient(#BFE8FF 0 30%,#5A5D60 30% 100%);border:5px solid #DDEDF4;touch-action:none}
+.lane-word{position:absolute;top:108px;height:84px;display:flex;align-items:center;justify-content:center;color:white;font-weight:1000;font-size:clamp(26px,4vw,44px);text-shadow:0 3px 0 rgba(0,0,0,.22);border-left:4px dashed rgba(255,255,255,.75)}
+.lane-word:first-child{border-left:0}
+.lane-car{position:absolute;top:22px;left:calc(50% - 38px);width:76px;height:52px;border-radius:18px 18px 12px 12px;background:#FFD45A;box-shadow:0 8px 0 rgba(0,0,0,.18);cursor:grab;touch-action:none;z-index:5}
+.lane-car:before{content:"";position:absolute;left:16px;top:8px;width:44px;height:18px;border-radius:12px 12px 5px 5px;background:#FFF8D7}
+.lane-car:after{content:"☁";position:absolute;left:23px;top:16px;font-size:24px}
+.lane-car.dragging{cursor:grabbing;transform:scale(1.05)}
+.lane-target{position:absolute;bottom:10px;height:110px;border-left:4px dashed rgba(255,255,255,.35)}
+.lane-target:first-child{border-left:0}
+.lane-guide{display:none}
+@media(max-width:760px){.lane-game{height:260px}.lane-word{top:92px;height:74px}.lane-car{width:66px;height:46px;top:18px;left:calc(50% - 33px)}}
+
+
+.lane-word.hint-correct{
+  animation: laneHintBlink .65s infinite alternate;
+  background:rgba(255,232,168,.38);
+  border-radius:18px;
+}
+@keyframes laneHintBlink{
+  from{filter:brightness(1); transform:scale(1);}
+  to{filter:brightness(1.25); transform:scale(1.06);}
+}
+
+
+.picture-choices{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;width:min(880px,94vw);margin:10px auto}
+.pic-card{background:#fff;border:4px solid var(--line);border-radius:28px;min-height:190px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;box-shadow:0 6px 0 rgba(70,105,120,.12)}
+.pic-card .label{font-size:clamp(18px,2.4vw,26px);font-weight:1000;color:#4e5b63}
+.pic-card.correct{background:var(--green);border-color:#9DDFAD}
+.pic-card.wrong{background:var(--pink);border-color:#FFADC9}
+@media(max-width:760px){
+  .hero{padding:20px 14px;width:96vw}
+  .picture-choices{grid-template-columns:1fr;gap:8px}
+  .pic-card{min-height:105px;flex-direction:row}
+}
+
+
+.malangi.need-help{
+  animation: malangiPulse .7s infinite alternate;
+  border-color:#FF9DC0;
+  background:#FFF0F6;
+}
+@keyframes malangiPulse{
+  from{transform:scale(1); box-shadow:0 5px 0 var(--shadow);}
+  to{transform:scale(1.06); box-shadow:0 8px 18px rgba(255,130,170,.32);}
+}
+@media(max-width:760px){
+  .malangi span.label{display:inline;font-size:12px;max-width:78px;line-height:1.1}
+}
+
+
+/* v14 clearer icons and fishing game */
+.bed{width:155px;height:100px;background:#CFE8FF;border-radius:22px;position:relative;border:6px solid #A7D7F4}
+.bed:before{content:"";position:absolute;left:14px;top:18px;width:48px;height:42px;border-radius:14px;background:#FFF8D7}
+.bed:after{content:"";position:absolute;left:58px;top:42px;width:82px;height:40px;border-radius:14px;background:#B6D7FF}
+.waterdrop{width:96px;height:130px;background:linear-gradient(#BFE8FF,#58BCEB);border-radius:55% 55% 60% 60%;transform:rotate(45deg);position:relative}
+.waterdrop:after{content:"";position:absolute;left:20px;top:22px;width:26px;height:16px;border-radius:50%;background:rgba(255,255,255,.75)}
+.lowbattery{width:150px;height:82px;border:8px solid #9AA8AF;border-radius:18px;position:relative;background:#F4F8FA}
+.lowbattery:before{content:"";position:absolute;right:-20px;top:21px;width:12px;height:28px;border-radius:0 8px 8px 0;background:#9AA8AF}
+.lowbattery:after{content:"";position:absolute;left:13px;top:14px;width:34px;height:40px;border-radius:8px;background:#FF9DBA}
+.fish-game{width:min(860px,94vw);height:330px;background:linear-gradient(#BFE8FF 0 26%,#73C9F0 26% 100%);border:5px solid #DDEDF4;border-radius:30px;position:relative;overflow:hidden;margin:auto;touch-action:none}
+.rod{position:absolute;left:18px;top:25px;width:180px;height:8px;background:#8B6A45;border-radius:99px;transform:rotate(-8deg);transform-origin:left}
+.rod:after{content:"";position:absolute;right:0;top:5px;width:3px;height:145px;background:#6B7B83}
+.hook{position:absolute;left:190px;top:170px;font-size:34px;z-index:3;transition:.25s}
+.fish{position:absolute;width:150px;height:78px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:30px;font-weight:1000;background:#FFF8D7;border:4px solid #fff;box-shadow:0 8px 0 rgba(0,0,0,.12);cursor:grab;touch-action:none}
+.fish:after{content:"";position:absolute;right:-28px;width:0;height:0;border-top:22px solid transparent;border-bottom:22px solid transparent;border-left:34px solid #FFF8D7}
+.fish.dragging{transform:scale(1.05)}
+.fish-target{position:absolute;left:45px;top:158px;width:120px;height:120px;border:5px dashed rgba(255,255,255,.8);border-radius:50%;display:grid;place-items:center;color:white;font-weight:1000;font-size:22px}
+.choice-hint-icon{display:inline-grid;place-items:center;margin-left:10px;vertical-align:middle;width:60px;height:46px}
+.choice-hint-icon > div{transform:scale(.38)}
+.choice.hint-correct{animation: laneHintBlink .65s infinite alternate;background:rgba(255,232,168,.38)}
+@media(max-width:760px){
+  .fish-game{height:270px}
+  .fish{width:115px;height:60px;font-size:24px}
+  .fish-target{width:95px;height:95px;left:25px;top:138px}
+  .rod{width:145px}.hook{left:150px;top:148px}
+}
+
+/* platform activity overrides */
+.platform-book-link{position:fixed;left:10px;bottom:10px;z-index:1000;background:white;border:3px solid #dbeaf2;border-radius:999px;padding:8px 12px;font-family:Pretendard,'Noto Sans KR',system-ui,sans-serif;font-weight:900;color:#333c45;text-decoration:none;box-shadow:0 8px 18px rgba(70,105,120,.16);font-size:15px}
+body.direct-activity .platform-book-link{display:none}
+body.direct-activity .top{height:46px;align-items:center}
+body.direct-activity .brand-small{font-size:11px}
+body.direct-activity .brand-small img{width:16px;height:16px}
+body.direct-activity .main-title{font-size:clamp(20px,3.2vw,30px);letter-spacing:0;line-height:1}
+body.direct-activity .bookline{font-size:11px;margin-top:2px}
+body.direct-activity .malangi{min-height:38px;padding:4px 8px;font-size:12px;box-shadow:0 3px 0 var(--shadow)}
+body.direct-activity .cloud{width:34px;height:24px;transform:scale(.82)}
+body.direct-activity .speech{top:54px;right:8px;font-size:16px;max-width:280px}
+body.direct-activity .app{padding:6px;max-width:1200px}
+body.direct-activity .screen{height:calc(100dvh - 52px);padding:2px 4px 4px;overflow:hidden}
+body.direct-activity #home,body.direct-activity #level,body.direct-activity #menu{display:none!important}
+body.direct-activity #play.active{display:grid;grid-template-rows:auto minmax(0,1fr) auto auto;align-items:stretch;justify-items:center;gap:4px}
+body.direct-activity .topbar{width:min(1040px,98vw);margin:0;gap:8px}
+body.direct-activity .topbar .activity-list-back{flex:0 0 auto;min-height:40px;padding:6px 12px;font-size:clamp(14px,1.8vw,19px)}
+body.direct-activity .progress{height:12px}
+body.direct-activity .count{font-size:14px;min-width:46px}
+body.direct-activity .card{width:min(1040px,98vw);height:100%;max-height:calc(100dvh - 190px);overflow:hidden;padding:8px;border-radius:22px;display:flex;flex-direction:column;align-items:center;justify-content:center}
+body.direct-activity h2{font-size:clamp(22px,4vw,38px);line-height:1.08;margin:2px 0 6px;letter-spacing:0}
+body.direct-activity .sub{font-size:clamp(15px,2.2vw,22px);margin:2px 0 6px;line-height:1.2}
+body.direct-activity button{min-height:44px;border-radius:18px;padding:8px 12px;font-size:clamp(15px,2vw,22px)}
+body.direct-activity .footer{margin-top:4px;gap:6px}
+body.direct-activity .play-actions{width:min(1040px,98vw)}
+body.direct-activity .feedback{height:30px;font-size:clamp(17px,2.4vw,26px);margin:0}
+body.direct-activity .grid3{gap:8px;width:min(820px,96vw)}
+body.direct-activity .choice{min-height:58px}
+body.direct-activity .scene{height:96px}
+body.direct-activity .write-board{height:min(260px,38dvh);width:min(780px,96vw);margin:2px auto}
+body.direct-activity .write-cell.single span{font-size:clamp(178px,31vw,300px);line-height:.86;transform:translateY(-1%)}
+body.direct-activity .keyboard{display:flex;flex-direction:column;gap:6px;padding:8px;margin:3px auto;width:min(860px,98vw);background:#eef3f6;border-radius:20px}
+body.direct-activity .key-row{display:grid;gap:6px;width:100%}
+body.direct-activity .key-row.row-1{grid-template-columns:repeat(10,minmax(0,1fr))}
+body.direct-activity .key-row.row-2{grid-template-columns:repeat(9,minmax(0,1fr));width:91%;margin:auto}
+body.direct-activity .key-row.row-3{grid-template-columns:repeat(7,minmax(0,1fr));width:73%;margin:auto}
+body.direct-activity .key-row.actions{grid-template-columns:1.5fr 1fr 1fr;margin-top:2px}
+body.direct-activity .key{min-width:0;min-height:44px;padding:5px 3px;font-size:clamp(18px,2.4vw,27px);border-radius:12px}
+body.direct-activity .key.action{font-size:clamp(15px,2vw,21px)}
+body.direct-activity .inputline{min-height:58px;font-size:clamp(30px,5.6vw,52px);margin:2px auto 5px;display:flex;align-items:center;justify-content:center}
+body.direct-activity .lane-game{height:min(250px,40dvh);width:min(820px,96vw);margin:2px auto 4px}
+body.direct-activity .lane-word{top:82px;height:64px;font-size:clamp(20px,3vw,34px)}
+body.direct-activity .lane-target{height:86px}
+body.direct-activity .lane-car{top:16px;width:64px;height:44px;left:calc(50% - 32px)}
+body.direct-activity .fish-game{width:min(820px,96vw);height:min(300px,43dvh);margin:2px auto 4px;background:linear-gradient(#cfeeff 0 28%,#83d0ee 28% 100%);border-radius:26px;overflow:hidden}
+body.direct-activity .rod{left:24px;top:24px;width:185px;height:7px;transform:rotate(-6deg);z-index:4}
+body.direct-activity .rod:after{right:1px;top:5px;width:3px;height:132px;background:#51636d;border-radius:99px;transform:rotate(6deg);transform-origin:top}
+body.direct-activity .hook{left:198px;top:145px;font-size:30px;z-index:5}
+body.direct-activity .fish-target{left:34px;top:142px;width:104px;height:104px;border-width:4px;background:rgba(255,255,255,.18)}
+body.direct-activity .fish-target>div{transform:scale(.58)}
+body.direct-activity .fish{width:126px;height:62px;font-size:24px;z-index:6}
+body.direct-activity .fish:after{right:-22px;border-top-width:18px;border-bottom-width:18px;border-left-width:28px}
+body.direct-activity .picture-choices{gap:8px;margin:2px auto;width:min(820px,96vw)}
+body.direct-activity .pic-card{min-height:142px;border-radius:22px;display:grid;grid-template-rows:minmax(72px,1fr) auto;place-items:center;gap:6px;overflow:hidden;padding:8px}
+body.direct-activity .pic-card>div:first-child{position:relative;z-index:1;scale:.48;transform-origin:center}
+body.direct-activity .pic-card .label{position:relative;z-index:2;width:100%;padding:4px 6px;background:rgba(255,255,255,.86);border-radius:12px;text-align:center}
+body.direct-activity .audio{width:min(420px,86vw);margin:4px auto}
+body.direct-activity .card{position:relative;isolation:isolate}
+body.direct-activity .scene{position:relative;z-index:1;flex:0 0 116px;width:100%;overflow:visible;margin:0 0 8px}
+body.direct-activity .scene>div{scale:.72;transform-origin:center}
+body.direct-activity .card>h2,body.direct-activity .card>.sub,body.direct-activity .card>.grid3,body.direct-activity .card>.footer{position:relative;z-index:2;flex:0 0 auto}
+body.direct-activity .choice{position:relative;z-index:2}
+body.direct-activity .listen-choice{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}
+body.direct-activity .choice-hint-icon{display:grid;margin:2px 0 0;width:48px;height:34px;overflow:hidden}
+body.direct-activity .choice-hint-icon>div{scale:.3;transform-origin:center}
+body.direct-activity .write-board{touch-action:none;user-select:none;-webkit-user-select:none}
+body.direct-activity .write-cells{z-index:1;pointer-events:none}
+body.direct-activity .write-board canvas{z-index:3;touch-action:none;user-select:none;-webkit-user-select:none;cursor:crosshair}
+body.direct-activity .play-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+body.direct-activity .play-actions button{width:100%;white-space:normal}
+body.direct-activity .play-actions #nextBtn{grid-column:1/-1}
+@media(max-width:760px){body.direct-activity .top{height:44px}body.direct-activity .main-title{font-size:20px}body.direct-activity .bookline{display:none}body.direct-activity .malangi span.label{display:none}body.direct-activity .card{max-height:calc(100dvh - 178px)}body.direct-activity .grid3{grid-template-columns:1fr}body.direct-activity .fish-game{height:250px}body.direct-activity .rod{width:148px}body.direct-activity .rod:after{height:110px}body.direct-activity .hook{left:158px;top:128px}body.direct-activity .fish-target{left:22px;top:132px;width:86px;height:86px}body.direct-activity .fish{width:104px;height:54px;font-size:21px}.play-actions .soft,.play-actions .green{font-size:15px;padding:7px 9px}}
+@media(max-width:600px){body.direct-activity .scene{flex-basis:92px}body.direct-activity .scene>div{scale:.58}body.direct-activity .keyboard{gap:4px;padding:6px}body.direct-activity .key-row{gap:4px}body.direct-activity .key{min-height:40px;font-size:18px;padding:3px 1px}body.direct-activity .key.action{font-size:14px}body.direct-activity .write-cell.single span{font-size:clamp(172px,53vw,245px)}}
+.writing-gallery-screen{overflow:auto!important;justify-content:flex-start!important;padding:8px 8px 20px!important}
+.writing-gallery-wrap{width:min(1000px,96vw);margin:0 auto;text-align:center}
+.writing-gallery-wrap h1{font-size:clamp(30px,5vw,52px);margin:4px 0}
+.writing-gallery-message{margin:4px 0 12px;color:#5e707a;font-size:clamp(18px,2.4vw,25px);font-weight:900}
+.writing-gallery-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.writing-sample-card{min-width:0;padding:12px;border:3px solid #dbeaf2;border-radius:22px;background:#fff;box-shadow:0 8px 18px rgba(70,105,120,.12)}
+.writing-sample-card strong{display:block;margin-bottom:8px;font-size:clamp(20px,2.6vw,30px)}
+.writing-sample-card img{display:block;width:100%;aspect-ratio:5/2;object-fit:contain;border:2px solid #e3eef4;border-radius:14px;background:#fff}
+.writing-gallery-empty{grid-column:1/-1;padding:34px;border:3px dashed #c9dfe9;border-radius:22px;font-size:22px;font-weight:900;color:#65757d}
+.writing-gallery-actions{display:flex;justify-content:center;flex-wrap:wrap;gap:8px;margin:14px 0}
+@media(max-width:700px){.writing-gallery-grid{grid-template-columns:1fr 1fr}.writing-gallery-actions button{min-height:46px;font-size:16px}}
+@media(max-width:430px){.writing-gallery-grid{grid-template-columns:1fr}}
+@media print{
+ html,body{height:auto!important;overflow:visible!important;background:#fff!important}
+ body.writing-print .top,body.writing-print .speech,body.writing-print .platform-book-link,body.writing-print .writing-gallery-actions,body.writing-print .writing-gallery-message{display:none!important}
+ body.writing-print .app{width:auto!important;height:auto!important;max-width:none!important;padding:0!important;overflow:visible!important;background:#fff!important}
+ body.writing-print .screen{display:none!important}
+ body.writing-print #writingGallery{display:block!important;height:auto!important;overflow:visible!important;padding:0!important}
+ body.writing-print .writing-gallery-wrap{width:auto!important}
+ body.writing-print .writing-gallery-wrap h1{font-size:22pt;margin:0 0 8mm}
+ body.writing-print .writing-gallery-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8mm}
+ body.writing-print .writing-sample-card{break-inside:avoid;page-break-inside:avoid;box-shadow:none;border:1.5pt solid #b9ced8;padding:6mm}
+ body.writing-print .writing-sample-card strong{font-size:16pt}
+ body.writing-print .writing-sample-card img{border:1pt solid #d7e4e9}
+}
+/* calm Malangi helper for activity runner */
+.malangi{position:relative;overflow:visible;background:rgba(241,250,255,.9);border-color:rgba(198,232,244,.95);transition:transform .18s ease,box-shadow .18s ease}
+.malangi:hover,.malangi:focus-visible,.malangi.is-talking{transform:translateY(-1px);box-shadow:0 0 0 5px rgba(195,230,246,.32),0 10px 24px rgba(74,95,122,.14);outline:none}
+.malangi .cloud{border-color:rgba(188,226,241,.9);border-radius:999px 999px 20px 20px;background:radial-gradient(circle at 27% 38%,#fff 0 21%,transparent 22%),radial-gradient(circle at 72% 39%,#fff 0 22%,transparent 23%),radial-gradient(circle at 50% 28%,#fff 0 25%,transparent 26%),linear-gradient(180deg,#fff 0%,#e9f8ff 100%);box-shadow:inset 0 -4px 0 rgba(134,176,199,.08);animation:malangiFloat 3.2s ease-in-out infinite}
+.malangi .cloud:before,.malangi .cloud:after{display:none}
+.malangi .face{font-size:0;inset:0;left:0;top:0}
+.malangi .face:before,.malangi .face:after{content:"";position:absolute;top:15px;width:4px;height:4px;border-radius:50%;background:#4f6170}
+.malangi .face:before{left:13px}.malangi .face:after{right:13px}
+.malangi .cloud:after{content:"";display:block;position:absolute;left:50%;top:18px;width:13px;height:7px;border:0;border-bottom:2px solid #6b7b84;border-radius:0 0 999px 999px;background:transparent;transform:translateX(-50%)}
+@keyframes malangiFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+</style></head>
+<body><a class="platform-book-link" href="../../../playgrounds/book/">책 놀이터로</a><div class="app"><header class="top"><div><div class="brand-small"><span id="teacherSpot"></span><span>수다쟁이 여니샘의 그림책 놀이터</span></div><div class="main-title">빠져빠져 연구소</div><div class="bookline">오늘의 그림책: 『빠질 때가 됐어』 · 홍주연 · 비룡소</div></div><button class="malangi" id="malangiBtn" onclick="malangiHelp()"><div class="cloud"><span class="face">•ᴗ•</span></div><span class="label">도움이 필요하면 눌러줘</span></button></header><div id="speech" class="speech hidden"></div>
+<section id="home" class="screen active"><div class="hero"><div class="sub">오늘의 그림책</div><div class="book-title">『빠질 때가 됐어』</div><div class="sub">책을 읽고, 말하고, 쓰고, 놀아요.</div><div class="grid3" style="margin-top:18px"><button class="bigmenu" onclick="openArea('game')"><div class="emoji">🎮</div><div class="name">게임</div><div class="desc">내용 이해 · 표현 놀이</div></button><button class="bigmenu green" onclick="openArea('write')"><div class="emoji">✏️</div><div class="name">쓰기</div><div class="desc">따라쓰기 · 자판 입력</div></button><button class="bigmenu pink" onclick="openArea('read')"><div class="emoji">🎙️</div><div class="name">읽기</div><div class="desc">듣고 말하기 · 녹음</div></button></div></div></section>
+<section id="level" class="screen"><h1 id="areaTitle"></h1><div class="grid2"><button class="bigmenu mint" onclick="openMenu('malang')"><div class="emoji">🫧</div><div class="name">말랑 코스</div><div class="desc">크게 보고, 듣고, 고르기</div></button><button class="bigmenu lav" onclick="openMenu('banjjak')"><div class="emoji">✨</div><div class="name">반짝 코스</div><div class="desc">문장과 맥락으로 생각하기</div></button></div><div class="footer"><button class="soft" onclick="show('home')">🏠 홈</button></div></section>
+<section id="menu" class="screen"><h1 id="menuTitle"></h1><div id="menuButtons" class="grid3"></div><div class="footer"><button class="soft" onclick="show('level')">← 뒤로</button><button class="soft" onclick="show('home')">🏠 홈</button></div></section>
+<section id="play" class="screen"><div class="topbar"><button class="soft activity-list-back" onclick="goBackToList()">← 활동 목록</button><div class="progress"><div id="bar" class="bar"></div></div><div id="count" class="count"></div></div><div id="body" class="card"></div><div id="feedback" class="feedback"></div><div class="footer play-actions"><button class="soft" onclick="goBookHome()">📚 책 활동 홈</button><button class="soft" onclick="goHome()">🏠 시작화면 홈</button><button id="nextBtn" class="green" onclick="next()">다음 →</button></div></section>
+<section id="writingGallery" class="screen writing-gallery-screen"><div class="writing-gallery-wrap"><h1>내가 쓴 글씨를 모아 봐요</h1><p class="writing-gallery-message">끝까지 써 본 기록이에요.</p><div id="writingGalleryGrid" class="writing-gallery-grid"></div><div class="writing-gallery-actions"><button onclick="restartWriting()">다시 쓰기</button><button class="soft" onclick="printWritingGallery()">🖨️ 인쇄하기</button><button class="soft" onclick="goBookHome()">📚 책 활동 홈</button><button class="soft" onclick="goHome()">🏠 홈</button></div></div></section>
+<section id="finish" class="screen"><div class="cloud" style="width:122px;height:78px;transform:scale(1.1);margin-bottom:18px"><span class="face" style="font-size:30px;left:35px;top:28px">•ᴗ•</span></div><h1>활동 완료!</h1><div class="footer"><button onclick="goBackToList()">다른 활동 고르기</button><button class="soft" onclick="goHome()">🏠 홈</button><button class="soft" onclick="goBookHome()">📚 책 활동 홈</button></div></section></div>
+<script>
+const teacherImg = '../../../shared/images/yeni-teacher.png';
+if(teacherImg){document.getElementById('teacherSpot').innerHTML='<img src="'+teacherImg+'" alt="여니샘">'}
+const CONTENT={words:[{term:'사랑에 빠지다',short:'사랑',mean:'아주 좋아하게 되다',scene:'heart'},{term:'잠에 빠지다',short:'잠',mean:'잠이 들다',scene:'bed'},{term:'구멍에 빠지다',short:'구멍',mean:'쏙 들어가다',scene:'hole'},{term:'물이 잘 빠진다',short:'물',mean:'흘러나가다',scene:'waterdrop'},{term:'기운이 빠진다',short:'기운',mean:'힘이 없다',scene:'lowbattery'},{term:'배꼽 빠지게 웃다',short:'웃음',mean:'많이 웃다',scene:'laugh'},{term:'생각에 빠진다',short:'생각',mean:'깊이 생각하다',scene:'think'},{term:'목 빠지게 기다리다',short:'기다림',mean:'오래 기다리다',scene:'wait'}],blanks:[{q:'잠에 [     ] 거야.',answer:'빠질',choices:['빠질','웃을','도망갈']},{q:'물이 잘 [     ].',answer:'빠진다',choices:['빠진다','잠든다','기다린다']},{q:'배꼽 [     ] 웃었어요.',answer:'빠지게',choices:['빠지게','조용히','천천히']},{q:'목 [     ] 기다렸어요.',answer:'빠지게',choices:['빠지게','흐르게','가볍게']},{q:'옆길로 [     ].',answer:'빠지다',choices:['빠지다','먹다','자다']}],bodyCards:[{txt:'잠에 빠지다',hint:'눈을 감고 고개를 살짝 숙여 보세요.',pose:'sleep'},{txt:'기운이 빠지다',hint:'어깨와 팔을 축 늘어뜨려 보세요.',pose:'tired'},{txt:'배꼽 빠지게 웃다',hint:'배를 잡고 크게 웃는 모습을 해 보세요.',pose:'laugh'},{txt:'목 빠지게 기다리다',hint:'목을 길게 빼고 멀리 바라보세요.',pose:'wait'}],writeWords:['잠','물','힘','사랑','구멍'],writeSentences:['잠에 빠지다','물이 잘 빠진다','생각에 빠진다'],readWords:['사랑','잠','물','구멍','기운','웃음'],readSentences:['사랑에 빠지다','잠에 빠지다','구멍에 빠지다','물이 잘 빠진다','기운이 빠진다','목 빠지게 기다리다']};
+let area='game',level='malang',activity='',idx=0,currentTotal=1,currentWritingLabel='',writingRecords=[],drawCtx=null,drawing=false,typedJamo='',mediaRecorder=null,audioChunks=[];
+const WRITING_STORAGE_PREFIX='bbumbbum-writing-';
+const SECTION_URLS={read:'../speak/',voice:'../speak/',speak:'../speak/',write:'../write/',game:'../game/'};
+const ACTIVITY_SECTION_MAP={listenPick:'speak',recordWord:'speak',recordSentence:'speak',recordMind:'speak',recordMy:'speak',traceWord:'write',syllablePick:'write',traceFree:'write',keyboardWord:'write',keyboardSentence:'write',traceSentence:'write',fishing:'game',bubble:'game',drive:'game',dragBlank:'game',body:'game',connect:'game',draw:'game'};
+function queryValue(key){return new URLSearchParams(location.search).get(key)}
+function currentSection(){const section=queryValue('section');if(section&&SECTION_URLS[section])return section;return ACTIVITY_SECTION_MAP[activity]||'game'}
+function goBackToList(){location.href=SECTION_URLS[currentSection()]||'../game/'}
+function goHome(){location.href='../../../'}
+function goBookHome(){location.href='../'}
+function $(id){return document.getElementById(id)}function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));$(id).classList.add('active');hideSpeech()}function speak(txt){if(!('speechSynthesis'in window))return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(txt);u.lang='ko-KR';u.rate=.82;u.pitch=1.05;speechSynthesis.speak(u)}function speakParts(parts){if(!('speechSynthesis'in window))return;speechSynthesis.cancel();let delay=0;parts.forEach(p=>{setTimeout(()=>{const u=new SpeechSynthesisUtterance(p);u.lang='ko-KR';u.rate=.82;speechSynthesis.speak(u)},delay);delay+=Math.max(700,p.length*230)})}
+function readBlankQuestion(q){
+  const parts = q.split("[     ]");
+  const first = (parts[0] || "").trim();
+  const second = (parts[1] || "").trim();
+  if(!("speechSynthesis" in window)) return;
+  speechSynthesis.cancel();
+
+  const say = (text, delay) => {
+    setTimeout(()=>{
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang = "ko-KR";
+      u.rate = .82;
+      u.pitch = 1.05;
+      speechSynthesis.speak(u);
+    }, delay);
+  };
+
+  let t = 0;
+  if(first){ say(first, t); t += Math.max(520, first.length * 130); }
+  t += 260;  // 빈칸 짧은 쉼
+  if(second){ say(second, t); t += Math.max(520, second.length * 130); }
+  say("빈칸에 들어갈 말을 찾아보세요.", t + 260);
+}
+
+function malangiHelp(){
+ const mb=$("malangiBtn"); if(mb) mb.classList.remove("need-help");
+ if(activity==="drive" && $("laneGame")){
+   const txt="문장을 듣고 알맞은 차선으로 차를 옮겨 봐.";
+   $("speech").textContent="☁️ 말랑이: "+txt;
+   $("speech").classList.remove("hidden");
+   showLaneHint();
+   speak(txt);
+   return;
+ }
+ const activityMessages={
+   bubble:"뜻을 읽고 알맞은 표현을 골라 봐.",
+   fishing:"같은 말을 가진 물고기를 낚시터로 옮겨 봐.",
+   body:"표현을 듣고 몸으로 천천히 나타내 봐.",
+   dragBlank:"문장을 듣고 빈칸에 들어갈 말을 골라 봐.",
+   connect:"표현과 잘 어울리는 뜻을 골라 봐.",
+   draw:"상황을 떠올리고 어울리는 그림을 골라 봐.",
+   traceWord:"회색 글씨 위를 손가락으로 천천히 따라가 봐.",
+   traceFree:"칸 안에 낱말을 천천히 써 봐.",
+   traceSentence:"문장을 듣고 칸 안에 천천히 써 봐.",
+   syllablePick:"위 글자와 같은 글자를 찾아 봐.",
+   keyboardWord:"제시된 낱말을 자판으로 입력해 봐.",
+   keyboardSentence:"제시된 문장을 자판으로 입력해 봐.",
+   recordWord:"단어를 듣고 천천히 따라 말해 봐.",
+   recordSentence:"문장을 듣고 천천히 따라 말해 봐.",
+   recordMind:"질문을 듣고 내 생각을 말해 봐.",
+   recordMy:"내 목소리를 녹음하고 다시 들어 봐.",
+   listenPick:"소리를 듣고 같은 단어를 골라 봐."
+ };
+ const sectionMessages={read:"먼저 듣고 천천히 따라 해 봐.",voice:"먼저 듣고 천천히 따라 해 봐.",speak:"먼저 듣고 천천히 따라 해 봐.",write:"손으로 천천히 표현해 봐.",game:"말과 상황을 잘 살펴봐."};
+ const txt=activityMessages[activity]||sectionMessages[currentSection()]||"천천히 하나씩 해 봐.";
+ $("speech").textContent="☁️ 말랑이: "+txt;
+ $("speech").classList.remove("hidden");
+ speak(txt);
+}
+function hideSpeech(){$('speech').classList.add('hidden')}function openArea(a){area=a;$('areaTitle').textContent={game:'🎮 게임',write:'✏️ 쓰기',read:'🎙️ 읽기'}[a];show('level')}function openMenu(lv){level=lv;show('menu');$('menuTitle').textContent={game:'게임',write:'쓰기',read:'읽기'}[area]+' · '+(lv==='malang'?'말랑 코스':'반짝 코스');let b='';if(area==='game'&&lv==='malang')b=`<button onclick="start('bubble')">🫧 뜻 방울 톡톡</button><button class="green" onclick="start('drive')">🚗 말랑이 차 옮기기</button><button class="pink" onclick="start('body')">🎭 몸으로 표현</button>`;else if(area==='game')b=`<button onclick="start('dragBlank')">🧩 문장 빈칸</button><button class="green" onclick="start('connect')">🔗 뜻 연결</button><button class="pink" onclick="start('draw')">🎨 그림으로 나타내기</button>`;else if(area==='write'&&lv==='malang')b=`<button onclick="start('traceWord')">✍️ 큰 글씨 따라쓰기</button><button class="green" onclick="start('syllablePick')">🔠 음절 찾기</button><button class="pink" onclick="start('traceFree')">🧺 자유 깍두기 쓰기</button>`;else if(area==='write')b=`<button onclick="start('traceSentence')">✍️ 문장 칸 쓰기</button><button class="green" onclick="start('keyboardWord')">⌨️ 낱말 자판 입력</button><button class="pink" onclick="start('keyboardSentence')">⌨️ 문장 자판 입력</button>`;else if(area==='read'&&lv==='malang')b=`<button onclick="start('recordWord')">🔊 단어 듣고 말하기</button><button class="green" onclick="start('listenPick')">👂 듣고 고르기</button><button class="pink" onclick="start('recordMy')">🎙️ 내 말 다시 듣기</button>`;else b=`<button onclick="start('recordSentence')">🔊 책 속 문장 따라 읽기</button><button class="pink" onclick="start('recordMind')">💬 내 마음 말하기</button>`;$('menuButtons').innerHTML=b}function start(a){activity=a;idx=0;typedJamo='';currentWritingLabel='';writingRecords=loadWritingRecords(a);show('play');render()}function setProgress(total){currentTotal=total;$('count').textContent=(idx+1)+'/'+total;$('bar').style.width=((idx+1)/total*100)+'%';$('feedback').textContent='';$('nextBtn').textContent=idx>=total-1?'완료':'다음 →';$('nextBtn').classList.remove('hidden')}function next(){if(isWritingTraceActivity())saveCurrentWriting(false);if(idx>=currentTotal-1){finish();return}idx++;render()}function finish(){if(isWritingTraceActivity()){showWritingGallery();return}show('finish')}function esc(s){return String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;')}function shuffle(a){return[...a].sort(()=>Math.random()-.5)}function scene(s){return `<div class="scene"><div class="${s}"></div></div>`}function fb(txt){$('feedback').textContent=txt;speak(txt);const mb=$('malangiBtn');if(mb)mb.classList.remove('need-help')}function wrong(ans){
+  $("feedback").textContent="다시 이야기를 들어볼까요?";
+  speak("다시 이야기를 들어볼까요?");
+  const mb=$("malangiBtn");
+  if(mb){
+    mb.classList.add("need-help");
+    setTimeout(()=>mb.classList.remove("need-help"), 4500);
+  }
+  if(ans){
+    setTimeout(()=>{
+      $("feedback").textContent="힌트가 필요하면 말랑이를 눌러봐요";
+      speak("힌트가 필요하면 말랑이를 눌러봐요.");
+    },900);
+  }
+}
+function render(){if(activity==='bubble')return renderBubble();if(activity==='drive')return renderDrive();if(activity==='fishing')return renderFishing();if(activity==='body')return renderBody();if(activity==='dragBlank')return renderDragBlank();if(activity==='connect')return renderConnect();if(activity==='draw')return renderDraw();if(activity==='traceWord')return renderTraceWord();if(activity==='traceSentence')return renderTraceSentence();if(activity==='traceFree')return renderTraceFree();if(activity==='syllablePick')return renderSyllablePick();if(activity==='keyboardWord')return renderKeyboard(CONTENT.writeWords);if(activity==='keyboardSentence')return renderKeyboard(CONTENT.writeSentences);if(activity==='recordWord'||activity==='recordMy')return renderRecord(CONTENT.readWords,'단어를 듣고 따라 말해요');if(activity==='recordSentence')return renderRecord(CONTENT.readSentences,'책 속 문장을 따라 읽어요');if(activity==='recordMind')return renderMind();if(activity==='listenPick')return renderListenPick()}function check(btn,c,a){document.querySelectorAll('.choice').forEach(x=>x.disabled=true);if(c===a){btn.classList.add('correct');fb('맞아요. 잘했어요!')}else{btn.classList.add('wrong');wrong(a)}}
+function renderBubble(){const list=CONTENT.words.slice(0,6);if(idx>=list.length)return finish();setProgress(list.length);const it=list[idx],choices=shuffle([it.term,...CONTENT.words.filter(x=>x.term!==it.term).slice(0,2).map(x=>x.term)]);$('body').innerHTML=`${scene(it.scene)}<h2>${esc(it.mean)}</h2><div class="sub">알맞은 표현을 골라요</div><div class="grid3">${choices.map(c=>`<button class="choice" onclick="check(this,'${esc(c)}','${esc(it.term)}')">${esc(c)}</button>`).join('')}</div>`;speak(it.mean+'. 알맞은 표현을 골라요.')}function renderDrive(){
+ const list=CONTENT.blanks.slice(0,5);
+ if(idx>=list.length)return finish();
+ setProgress(list.length);
+ const it=list[idx];
+ const laneCount = idx<1 ? 2 : idx<3 ? 3 : 4;
+ let choices=[...it.choices];
+ const extras=["잠든다","기다린다","흐른다","웃는다","빠진다","달린다"].filter(x=>!choices.includes(x)&&x!==it.answer);
+ while(choices.length<laneCount && extras.length) choices.push(extras.shift());
+ choices=shuffle(choices).slice(0,laneCount);
+ if(!choices.includes(it.answer)) choices[0]=it.answer;
+ const wordHtml=choices.map((c,i)=>{
+   const w=100/laneCount, left=i*w;
+   return `<div class="lane-word" data-answer="${esc(c)}" style="left:${left}%;width:${w}%">${esc(c)}</div>`;
+ }).join("");
+ const targetHtml=choices.map((c,i)=>{
+   const w=100/laneCount, left=i*w;
+   return `<div class="lane-target" data-answer="${esc(c)}" style="left:${left}%;width:${w}%"></div>`;
+ }).join("");
+ const spokenSentence = it.q;
+ const spokenGuide = "빈칸에 들어갈 말을 찾아보세요.";
+ $("body").innerHTML=`<h2>${esc(it.q).replace("[     ]","_____")}</h2>
+   <div class="sub">문장을 듣고, 말랑이 차를 정답 차선으로 끌어 놓아요</div>
+   <div id="laneGame" class="lane-game">
+     ${wordHtml}
+     ${targetHtml}
+     <div id="laneCar" class="lane-car" data-correct="${esc(it.answer)}"></div>
+   </div>
+   <div class="footer"><button class="soft" onclick="readLaneSentence()">🔊 문장 다시 듣기</button></div>`;
+ window.currentLaneSentence = spokenSentence;
+ window.currentLaneGuide = spokenGuide;
+ window.currentLaneAnswer = it.answer;
+ setupLaneDrag();
+ readLaneSentence();
+}
+function readLaneSentence(){
+  const s = window.currentLaneSentence || "";
+  readBlankQuestion(s);
+}
+function showLaneHint(){
+  const ans = window.currentLaneAnswer;
+  if(!ans){ return false; }
+  const words=[...document.querySelectorAll(".lane-word")];
+  const target=words.find(w=>w.dataset.answer===ans);
+  if(target){
+    target.classList.add("hint-correct");
+    speak("반짝이는 글자를 찾아볼까요?");
+    setTimeout(()=>target.classList.remove("hint-correct"), 5000);
+    return true;
+  }
+  return false;
+}
+function setupLaneDrag(){
+ const car=$("laneCar"), game=$("laneGame");
+ let dragging=false, offsetX=0, offsetY=0;
+ const moveTo=(clientX,clientY)=>{
+   const r=game.getBoundingClientRect();
+   let x=clientX-r.left-offsetX, y=clientY-r.top-offsetY;
+   x=Math.max(0,Math.min(r.width-car.offsetWidth,x));
+   y=Math.max(0,Math.min(r.height-car.offsetHeight,y));
+   car.style.left=x+"px"; car.style.top=y+"px";
+ };
+ car.onpointerdown=e=>{
+   dragging=true; car.classList.add("dragging"); car.setPointerCapture(e.pointerId);
+   const cr=car.getBoundingClientRect();
+   offsetX=e.clientX-cr.left; offsetY=e.clientY-cr.top;
+   e.preventDefault();
+ };
+ car.onpointermove=e=>{ if(!dragging)return; moveTo(e.clientX,e.clientY); e.preventDefault(); };
+ car.onpointerup=e=>{
+   dragging=false; car.classList.remove("dragging");
+   const gr=game.getBoundingClientRect(), cr=car.getBoundingClientRect();
+   const centerX=cr.left+cr.width/2-gr.left;
+   const targets=[...document.querySelectorAll(".lane-target")];
+   const hit=targets.find(t=>{
+     const left=t.offsetLeft, right=left+t.offsetWidth;
+     return centerX>=left && centerX<=right;
+   });
+   if(hit){
+     const chosen=hit.dataset.answer, correct=car.dataset.correct;
+     speak(chosen);
+     setTimeout(()=>{
+       if(chosen===correct) fb("맞아요. 잘했어요!");
+       else wrong(correct);
+     }, 850);
+   }else{
+     speak("차선 위에 올려 주세요.");
+   }
+   e.preventDefault();
+ };
+}
+function renderFishing(){
+ const list=CONTENT.words.slice(0,5);
+ if(idx>=list.length)return finish();
+ setProgress(list.length);
+ const it=list[idx];
+ const choices=shuffle([it.short,...CONTENT.words.filter(x=>x.short!==it.short).slice(0,2).map(x=>x.short)]);
+ const fishHtml=choices.map((c,i)=>{
+   const left=[58,42,70][i] || 55;
+   const top=[48,66,66][i] || 55;
+   return `<div class="fish" data-word="${esc(c)}" style="left:${left}%;top:${top}%">${esc(c)}</div>`;
+ }).join("");
+ $("body").innerHTML=`<h2>${esc(it.short)}</h2><div class="sub">같은 그림 친구를 낚시터로 끌어 와요</div>
+   <div class="fish-game" id="fishGame">
+     <div class="rod"></div><div class="hook">🪝</div>
+     <div class="fish-target" id="fishTarget"><div class="${it.scene}"></div></div>
+     ${fishHtml}
+   </div>
+   <div class="footer"><button onclick="speakParts(['${esc(it.short)}','같은 그림 친구를 낚아 보세요.'])">🔊 다시 듣기</button></div>`;
+ setupFishDrag(it.short);
+ speakParts([it.short,"같은 그림 친구를 낚아 보세요."]);
+}
+function setupFishDrag(answer){
+ const game=$("fishGame"), target=$("fishTarget");
+ document.querySelectorAll(".fish").forEach(fish=>{
+   let dragging=false, ox=0, oy=0;
+   const move=(cx,cy)=>{
+     const r=game.getBoundingClientRect();
+     let x=cx-r.left-ox, y=cy-r.top-oy;
+     x=Math.max(0,Math.min(r.width-fish.offsetWidth,x));
+     y=Math.max(0,Math.min(r.height-fish.offsetHeight,y));
+     fish.style.left=x+"px"; fish.style.top=y+"px";
+   };
+   fish.onpointerdown=e=>{
+     dragging=true; fish.classList.add("dragging"); fish.setPointerCapture(e.pointerId);
+     const fr=fish.getBoundingClientRect(); ox=e.clientX-fr.left; oy=e.clientY-fr.top; e.preventDefault();
+   };
+   fish.onpointermove=e=>{ if(!dragging)return; move(e.clientX,e.clientY); e.preventDefault(); };
+   fish.onpointerup=e=>{
+     dragging=false; fish.classList.remove("dragging");
+     const fr=fish.getBoundingClientRect(), tr=target.getBoundingClientRect();
+     const cx=fr.left+fr.width/2, cy=fr.top+fr.height/2;
+     if(cx>=tr.left && cx<=tr.right && cy>=tr.top && cy<=tr.bottom){
+       const chosen=fish.dataset.word; speak(chosen);
+       setTimeout(()=>{ if(chosen===answer) fb("맞아요. 잘했어요!"); else wrong(answer); },700);
+     }
+     e.preventDefault();
+   };
+ });
+}
+
+function renderBody(){const list=CONTENT.bodyCards;if(idx>=list.length)return finish();setProgress(list.length);const it=list[idx];$('body').innerHTML=`<h2>${esc(it.txt)}</h2><div class="sub">몸으로 표현해 보세요</div><div id="bodyHint" class="hintbox hidden"></div><div class="footer"><button onclick="showBodyHint('${esc(it.hint)}','${it.pose}')">💡 힌트</button><button class="green" onclick="fb('표현 완료!')">표현했어요</button></div>`;speak(it.txt+'. 몸으로 표현해 보세요.')}function showBodyHint(hint,pose){$('bodyHint').classList.remove('hidden');$('bodyHint').innerHTML=`<div class="stick" style="--a:${pose==='sleep'?'25deg':pose==='tired'?'0deg':pose==='laugh'?'-20deg':'10deg'}"><div class="head"></div><div class="body"></div><div class="arm"></div><div class="leg1"></div><div class="leg2"></div></div><div class="sub">${hint}</div>`;speak(hint)}function renderDragBlank(){const list=CONTENT.blanks;if(idx>=list.length)return finish();setProgress(list.length);const it=list[idx];
+ $("body").innerHTML=`<h2>${esc(it.q).replace("[     ]",'<span id="drop" class="drop-zone">?</span>')}</h2><div class="sub">문장을 듣고 알맞은 말을 골라요</div><div class="grid3">${shuffle(it.choices).map(c=>`<button class="choice" onclick="selectBlank(this,'${esc(c)}','${esc(it.answer)}')">${esc(c)}</button>`).join("")}</div><div class="footer"><button class="soft" onclick="readBlankQuestion('${esc(it.q)}')">🔊 문장 다시 듣기</button></div>`;
+ readBlankQuestion(it.q);
+}
+function selectBlank(btn,c,a){$('drop').textContent=c;document.querySelectorAll('.choice').forEach(x=>x.disabled=true);if(c===a){btn.classList.add('correct');fb('이야기를 잘 들었군요. 맞아요!')}else{btn.classList.add('wrong');wrong(a)}}function renderConnect(){const list=CONTENT.words.slice(0,6);if(idx>=list.length)return finish();setProgress(list.length);const it=list[idx],choices=shuffle([it.mean,...CONTENT.words.filter(x=>x.mean!==it.mean).slice(0,2).map(x=>x.mean)]);$('body').innerHTML=`${scene(it.scene)}<h2>${esc(it.term)}</h2><div class="grid3">${choices.map(c=>`<button class="choice" onclick="check(this,'${esc(c)}','${esc(it.mean)}')">${esc(c)}</button>`).join('')}</div>`;speak(it.term+'. 뜻을 골라요.')}function renderDraw(){
+ const list=[
+   {q:"기운이 빠진 모습", answer:"기운", correct:"energy", choices:[["energy","힘이 빠졌어요"],["laugh","많이 웃어요"],["heart","좋아해요"]]},
+   {q:"배꼽 빠지게 웃는 모습", answer:"웃음", correct:"laugh", choices:[["laugh","깔깔 웃어요"],["moon","잠이 와요"],["wait","기다려요"]]},
+   {q:"생각에 빠진 모습", answer:"생각", correct:"think", choices:[["think","곰곰이 생각해요"],["hole","구멍에 빠져요"],["water","물이 흘러요"]]}
+ ];
+ if(idx>=list.length)return finish();setProgress(list.length);const it=list[idx];
+ $("body").innerHTML=`<h2>${esc(it.q)}</h2><div class="sub">알맞은 그림을 골라요</div>
+ <div class="picture-choices">${shuffle(it.choices).map(ch=>`<button class="pic-card" onclick="checkPic(this,'${ch[0]}','${it.correct}')"><div class="${ch[0]}"></div><div class="label">${ch[1]}</div></button>`).join("")}</div>
+ <div class="footer"><button onclick="speak('${esc(it.q)}. 알맞은 그림을 골라요.')">🔊 다시 듣기</button></div>`;
+ speak(it.q+". 알맞은 그림을 골라요.");
+}
+function checkPic(btn,c,a){
+ document.querySelectorAll(".pic-card").forEach(x=>x.disabled=true);
+ if(c===a){btn.classList.add("correct");fb("맞아요. 잘했어요!");}
+ else{btn.classList.add("wrong");wrong("알맞은 그림");}
+}
+function showDrawHint(){$('drawHint').classList.remove('hidden');$('drawHint').innerHTML='<div class="scene"><div class="think"></div></div><div class="sub">이 그림에 표정, 손, 상황을 더 그려 보세요.</div>';speak('이 그림에 더 그려 보세요.')}
+function renderTraceWord(){const list=CONTENT.writeWords;if(idx>=list.length)return finish();setProgress(list.length);drawTrace(list[idx],false,true)}function renderTraceFree(){const list=['빠지다','말랑이','내 생각'];if(idx>=list.length)return finish();setProgress(list.length);drawTrace(list[idx],false,true)}function renderTraceSentence(){const list=CONTENT.writeSentences;if(idx>=list.length)return finish();setProgress(list.length);drawSentenceTrace(list[idx],false)}function drawTrace(w,sentence,ghost){currentWritingLabel=w;const chars=w.replaceAll(' ','').split('');const single=chars.length===1;$('body').innerHTML=`<h2>${esc(w)}</h2><div class="sub">회색 글씨를 크게 따라 써요</div><div class="write-board"><div class="write-cells" style="grid-template-columns:repeat(${chars.length},1fr)">${chars.map(ch=>`<div class="write-cell ${sentence?'sentence':''} ${single?'single':''}"><span>${ghost?esc(ch):''}</span></div>`).join('')}</div><canvas id="draw" width="900" height="360"></canvas></div><div class="footer"><button onclick="speak('${esc(w)}')">🔊 다시 듣기</button><button class="soft pink" onclick="clearDraw()">지우기</button><button class="green" onclick="completeWriting('${esc(w)}')">다 썼어요</button></div>`;setupCanvas(900,360);speakParts([w,'따라 써 보세요.'])}function drawSentenceTrace(w,ghost){currentWritingLabel=w;const chars=w.split('');$('body').innerHTML=`<h2>제시 문장: <span style="color:#ec4f84">${esc(w)}</span></h2><div class="sub">칸에 문장을 써요</div><div class="write-board"><div class="write-cells" style="grid-template-columns:repeat(${chars.length},1fr)">${chars.map(ch=>`<div class="write-cell sentence"><span>${ghost&&ch!==' '?esc(ch):''}</span></div>`).join('')}</div><canvas id="draw" width="900" height="360"></canvas></div><div class="footer"><button onclick="drawSentenceTrace('${esc(w)}',true)">바탕글씨 생성</button><button onclick="speak('${esc(w)}')">🔊 다시 듣기</button><button class="soft pink" onclick="clearDraw()">지우기</button><button class="green" onclick="completeWriting('${esc(w)}')">다 썼어요</button></div>`;setupCanvas(900,360);speakParts([w,'칸에 써 보세요.'])}function renderSyllablePick(){const list=CONTENT.writeWords;if(idx>=list.length)return finish();setProgress(list.length);const target=list[idx],pool=['자','동','밤','감','물','힘','구','멍','랑'].filter(x=>x!==target),choices=shuffle([target,...pool.slice(0,2)]);$('body').innerHTML=`<h2>${esc(target)}</h2><div class="sub">같은 글자를 찾아요</div><div class="grid3">${choices.map(c=>`<button class="choice" onclick="check(this,'${esc(c)}','${esc(target)}')">${esc(c)}</button>`).join('')}</div><div class="footer"><button onclick="speakParts(['${esc(target)}','같은 글자를 찾아요.'])">🔊 다시 듣기</button></div>`;speakParts([target,'같은 글자를 찾아요.'])}
+const CHO=['ㄱ','ㄲ','ㄴ','ㄷ','ㄸ','ㄹ','ㅁ','ㅂ','ㅃ','ㅅ','ㅆ','ㅇ','ㅈ','ㅉ','ㅊ','ㅋ','ㅌ','ㅍ','ㅎ'],JUNG=['ㅏ','ㅐ','ㅑ','ㅒ','ㅓ','ㅔ','ㅕ','ㅖ','ㅗ','ㅘ','ㅙ','ㅚ','ㅛ','ㅜ','ㅝ','ㅞ','ㅟ','ㅠ','ㅡ','ㅢ','ㅣ'],JONG=['','ㄱ','ㄲ','ㄳ','ㄴ','ㄵ','ㄶ','ㄷ','ㄹ','ㄺ','ㄻ','ㄼ','ㄽ','ㄾ','ㄿ','ㅀ','ㅁ','ㅂ','ㅄ','ㅅ','ㅆ','ㅇ','ㅈ','ㅊ','ㅋ','ㅌ','ㅍ','ㅎ'];function composeJamo(str){let out='',i=0;while(i<str.length){let ch=str[i];if(ch===' '){out+=' ';i++;continue}let ci=CHO.indexOf(ch);if(ci>=0&&i+1<str.length){let vi=JUNG.indexOf(str[i+1]);if(vi>=0){let ji=0,step=2;if(i+2<str.length){let maybe=JONG.indexOf(str[i+2]),nextV=JUNG.indexOf(str[i+3]);if(maybe>0&&nextV<0){ji=maybe;step=3}}out+=String.fromCharCode(0xac00+(ci*21+vi)*28+ji);i+=step;continue}}out+=ch;i++}return out}function renderKeyboard(list){if(idx>=list.length)return finish();setProgress(list.length);typedJamo='';lastKey='';const target=list[idx];$('body').innerHTML=`<h2>제시 단어: <span style="color:#ec4f84">${esc(target)}</span></h2><div id="inputLine" class="inputline">입력</div>${keyboardHTML(target)}`;drawTyped();speak(target+'. 키보드로 입력해 보세요.')}function keyboardHTML(target){const rows=[['ㅂ','ㅈ','ㄷ','ㄱ','ㅅ','ㅛ','ㅕ','ㅑ','ㅐ','ㅔ'],['ㅁ','ㄴ','ㅇ','ㄹ','ㅎ','ㅗ','ㅓ','ㅏ','ㅣ'],['ㅋ','ㅌ','ㅊ','ㅍ','ㅠ','ㅜ','ㅡ']];return `<div class="keyboard">${rows.map((row,i)=>`<div class="key-row row-${i+1}">${row.map(k=>`<button class="key" onclick="typeKey('${k}')">${k}</button>`).join('')}</div>`).join('')}<div class="key-row actions"><button class="key action space" onclick="typeKey(' ')">띄어쓰기</button><button class="key action del" onclick="typedJamo=typedJamo.slice(0,-1);lastKey='';drawTyped()">지우기</button><button class="key action enter" onclick="checkTyped('${esc(target)}')">입력</button></div></div>`}let lastKey="", lastKeyTime=0;
+function typeKey(k){
+ const dbl={"ㄱ":"ㄲ","ㄷ":"ㄸ","ㅂ":"ㅃ","ㅅ":"ㅆ","ㅈ":"ㅉ"};
+ const now=Date.now();
+ const last=typedJamo.slice(-1);
+ if(dbl[k] && last===k && (lastKey===k || now-lastKeyTime<900)){
+   typedJamo=typedJamo.slice(0,-1)+dbl[k];
+ }else{
+   typedJamo+=k;
+ }
+ lastKey=k; lastKeyTime=now;
+ drawTyped();
+}
+function drawTyped(){const text=composeJamo(typedJamo);$('inputLine').textContent=text||'입력'}function checkTyped(target){const text=composeJamo(typedJamo).replaceAll(' ','');if(!target){fb('입력했어요!');return}if(text===target.replaceAll(' ',''))fb('잘 입력했어요!');else wrong(target)}
+function renderRecord(list,label){if(idx>=list.length)return finish();setProgress(list.length);const t=list[idx];$('body').innerHTML=`<h2>${esc(t)}</h2><div class="sub">${label}</div><div class="footer"><button onclick="speak('${esc(t)}')">🔊 듣기</button><button class="pink" onclick="startRec()">🎙️ 녹음 시작</button><button class="danger" onclick="stopRec()">⏹ 멈춤</button></div><audio id="audio" class="audio hidden" controls></audio><div class="footer"><button class="green" onclick="fb('녹음 완료!')">다 했어요</button></div>`;speakParts([t,'따라 말해 보세요.'])}function renderMind(){const prompts=['나는 무엇에 빠졌나요?','나는 언제 기운이 빠지나요?','나는 무엇을 목 빠지게 기다렸나요?'];if(idx>=prompts.length)return finish();setProgress(prompts.length);const p=prompts[idx];$('body').innerHTML=`<h2>${esc(p)}</h2><div class="sub">내 마음을 말하고 녹음해요</div><div class="footer"><button onclick="speak('${esc(p)}')">🔊 질문 듣기</button><button class="pink" onclick="startRec()">🎙️ 녹음 시작</button><button class="danger" onclick="stopRec()">⏹ 멈춤</button></div><audio id="audio" class="audio hidden" controls></audio><div class="footer"><button class="green" onclick="fb('내 마음 말하기 완료!')">다 했어요</button></div>`;speak(p)}function renderListenPick(){const list=CONTENT.readWords;if(idx>=list.length)return finish();setProgress(list.length);const target=list[idx];const it=CONTENT.words.find(x=>x.short===target)||CONTENT.words[idx];const choices=shuffle([target,...CONTENT.readWords.filter(x=>x!==target).slice(0,2)]);
+ $("body").innerHTML=`<h2>잘 듣고 골라요</h2><div class="sub">소리를 듣고 같은 단어를 찾아요</div><div class="grid3">${choices.map(c=>`<button class="choice listen-choice" data-word="${esc(c)}" onclick="check(this,'${esc(c)}','${esc(target)}')"><span>${esc(c)}</span></button>`).join("")}</div><div class="footer"><button onclick="speak('${esc(target)}')">🔊 듣기</button><button onclick="showPicHint()">💡 힌트</button></div>`;
+ window.listenHintWord=target; window.listenHintScene=it.scene;
+ setTimeout(()=>speak(target),400);
+}
+function showPicHint(){
+ const word=window.listenHintWord, sceneName=window.listenHintScene;
+ const btn=[...document.querySelectorAll(".listen-choice")].find(b=>b.dataset.word===word);
+ if(btn && !btn.querySelector(".choice-hint-icon")){
+   btn.insertAdjacentHTML("beforeend", `<span class="choice-hint-icon"><div class="${sceneName}"></div></span>`);
+   btn.classList.add("hint-correct");
+   setTimeout(()=>btn.classList.remove("hint-correct"),5000);
+ }
+ speak("힌트를 볼까요?");
+}
+async function startRec(){try{const stream=await navigator.mediaDevices.getUserMedia({audio:true});audioChunks=[];mediaRecorder=new MediaRecorder(stream);mediaRecorder.ondataavailable=e=>audioChunks.push(e.data);mediaRecorder.onstop=()=>{const blob=new Blob(audioChunks,{type:'audio/webm'});const url=URL.createObjectURL(blob);const au=$('audio');au.src=url;au.classList.remove('hidden');stream.getTracks().forEach(t=>t.stop())};mediaRecorder.start();$('feedback').textContent='녹음 중...'}catch(e){$('feedback').textContent='마이크 권한을 허용해 주세요.'}}function stopRec(){if(mediaRecorder&&mediaRecorder.state!=='inactive'){mediaRecorder.stop();$('feedback').textContent='내 목소리를 들어보세요.'}}
+function isWritingTraceActivity(){return activity==='traceWord'||activity==='traceSentence'||activity==='traceFree'}
+function writingStorageKey(a=activity){return WRITING_STORAGE_PREFIX+a}
+function loadWritingRecords(a){
+ try{
+   const saved=JSON.parse(localStorage.getItem(writingStorageKey(a))||'[]');
+   return Array.isArray(saved)?saved:[];
+ }catch(_){return[]}
+}
+function persistWritingRecords(){
+ try{localStorage.setItem(writingStorageKey(),JSON.stringify(writingRecords))}catch(_){}
+}
+function saveCurrentWriting(showFeedback=true){
+ const canvas=$('draw');
+ if(!canvas||!currentWritingLabel)return;
+ const record={index:idx,label:currentWritingLabel,image:canvas.toDataURL('image/png')};
+ const existing=writingRecords.findIndex(item=>item.index===idx);
+ if(existing>=0)writingRecords[existing]=record;else writingRecords.push(record);
+ writingRecords.sort((a,b)=>a.index-b.index);
+ persistWritingRecords();
+ if(showFeedback){
+   $('feedback').textContent='끝까지 써 본 기록이에요.';
+   speak('끝까지 써 본 기록이에요.');
+ }
+}
+function completeWriting(label){currentWritingLabel=label;saveCurrentWriting(true)}
+function renderWritingGallery(){
+ const grid=$('writingGalleryGrid');
+ if(!writingRecords.length){
+   grid.innerHTML='<div class="writing-gallery-empty">아직 모아 둔 글씨가 없어요. 천천히 다시 써 봐요.</div>';
+   return;
+ }
+ grid.innerHTML=writingRecords.map(record=>`<article class="writing-sample-card"><strong>${esc(record.label)}</strong><img src="${record.image}" alt="${esc(record.label)} 내가 쓴 글씨"></article>`).join('');
+}
+function showWritingGallery(){renderWritingGallery();show('writingGallery')}
+function restartWriting(){
+ try{localStorage.removeItem(writingStorageKey())}catch(_){}
+ writingRecords=[];
+ idx=0;
+ currentWritingLabel='';
+ show('play');
+ render();
+}
+function printWritingGallery(){
+ document.body.classList.add('writing-print');
+ window.print();
+}
+window.addEventListener('afterprint',()=>document.body.classList.remove('writing-print'));
+function setupCanvas(w,h){
+ const c=$('draw');
+ drawCtx=c.getContext('2d');
+ drawCtx.lineWidth=14;
+ drawCtx.lineCap='round';
+ drawCtx.lineJoin='round';
+ drawCtx.strokeStyle='#333c45';
+ c.style.touchAction='none';
+ c.style.userSelect='none';
+ c.oncontextmenu=e=>e.preventDefault();
+ const pos=e=>{const r=c.getBoundingClientRect();return{x:(e.clientX-r.left)*c.width/r.width,y:(e.clientY-r.top)*c.height/r.height}};
+ const stop=e=>{if(!drawing)return;drawing=false;try{if(c.hasPointerCapture(e.pointerId))c.releasePointerCapture(e.pointerId)}catch(_){}e.preventDefault()};
+ c.onpointerdown=e=>{
+   if(e.button!==undefined&&e.button!==0)return;
+   drawing=true;
+   try{c.setPointerCapture(e.pointerId)}catch(_){}
+   const p=pos(e);
+   drawCtx.beginPath();
+   drawCtx.moveTo(p.x,p.y);
+   drawCtx.lineTo(p.x+.01,p.y+.01);
+   drawCtx.stroke();
+   e.preventDefault();
+ };
+ c.onpointermove=e=>{
+   if(!drawing)return;
+   const events=typeof e.getCoalescedEvents==='function'?e.getCoalescedEvents():[e];
+   events.forEach(point=>{const p=pos(point);drawCtx.lineTo(p.x,p.y)});
+   drawCtx.stroke();
+   e.preventDefault();
+ };
+ c.onpointerup=stop;
+ c.onpointercancel=stop;
+ c.onlostpointercapture=()=>{drawing=false};
+}function clearDraw(){if(drawCtx)drawCtx.clearRect(0,0,900,360)}
+setTimeout(()=>{const direct=queryValue('activity');if(direct){document.body.classList.add('direct-activity');start(direct);return}location.replace('../')},80);
+</script></body></html>
+
+
+
+
+
+
+
