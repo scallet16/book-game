@@ -1689,6 +1689,10 @@ h1 {
   background: linear-gradient(145deg, #f4dfc7, #fff4e5);
 }
 
+.ios-classroom {
+  background: linear-gradient(145deg, #dce9f8, #f5f9ff);
+}
+
 .ios-home-note {
   min-height: 98px;
   display: flex;
@@ -1749,6 +1753,12 @@ h1 {
 
   .ios-home-note {
     align-items: flex-start;
+  }
+}
+
+@media (min-width: 761px) {
+  .ios-classroom {
+    grid-column: 2;
   }
 }
 
