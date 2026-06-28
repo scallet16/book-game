@@ -1508,7 +1508,7 @@ h1 {
   min-height: 100dvh;
   width: min(980px, 100%);
   margin: 0 auto;
-  padding: max(16px, env(safe-area-inset-top)) clamp(16px, 4vw, 34px) calc(106px + env(safe-area-inset-bottom));
+  padding: max(16px, env(safe-area-inset-top)) clamp(16px, 4vw, 34px) calc(28px + env(safe-area-inset-bottom));
   position: relative;
 }
 
@@ -1673,6 +1673,14 @@ h1 {
   background: linear-gradient(145deg, #e4dcf2, #f8f4ff);
 }
 
+.ios-hangul-icon {
+  color: #6d5aa8;
+  font-size: clamp(50px, 7vw, 76px);
+  font-weight: 1000;
+  letter-spacing: 0;
+  text-shadow: 0 3px 0 rgba(255, 255, 255, 0.64);
+}
+
 .ios-number {
   background: linear-gradient(145deg, #d9edf8, #f3fbff);
 }
@@ -1721,80 +1729,6 @@ h1 {
   font-size: clamp(15px, 2vw, 20px);
   font-weight: 850;
   line-height: 1.35;
-}
-
-.ios-tabbar {
-  position: fixed;
-  left: 50%;
-  bottom: max(12px, env(safe-area-inset-bottom));
-  z-index: 20;
-  width: min(520px, calc(100% - 28px));
-  min-height: 74px;
-  transform: translateX(-50%);
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 4px;
-  padding: 8px;
-  border-radius: 30px;
-  background: rgba(255, 255, 250, 0.82);
-  border: 2px solid rgba(255, 255, 255, 0.9);
-  box-shadow: 0 18px 38px rgba(74, 95, 122, 0.16);
-  backdrop-filter: blur(18px);
-}
-
-.ios-tab {
-  min-height: 56px;
-  border: 0;
-  border-radius: 22px;
-  display: grid;
-  place-items: center;
-  align-content: center;
-  gap: 2px;
-  background: transparent;
-  color: #97a0ad;
-  font: inherit;
-  font-weight: 950;
-  cursor: pointer;
-}
-
-.ios-tab span {
-  font-size: 28px;
-  line-height: 1;
-}
-
-.ios-tab strong {
-  font-size: 13px;
-  line-height: 1.1;
-}
-
-.ios-tab.is-active {
-  color: #3478f6;
-  background: rgba(216, 234, 255, 0.54);
-}
-
-.ios-soon-message {
-  position: fixed;
-  left: 50%;
-  bottom: calc(94px + env(safe-area-inset-bottom));
-  z-index: 25;
-  transform: translateX(-50%);
-  width: min(440px, calc(100% - 40px));
-  min-height: 0;
-  margin: 0;
-  padding: 0;
-  color: #566575;
-  text-align: center;
-  font-size: 18px;
-  font-weight: 950;
-}
-
-.ios-soon-message:not(:empty) {
-  min-height: 48px;
-  padding: 12px 18px;
-  border-radius: 999px;
-  background: rgba(255, 248, 220, 0.96);
-  border: 2px solid rgba(255, 255, 255, 0.9);
-  box-shadow: 0 12px 28px rgba(74, 95, 122, 0.14);
 }
 
 @media (max-width: 760px) {
