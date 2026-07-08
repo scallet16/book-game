@@ -21,18 +21,21 @@
         <img src="../../shared/images/yeni-teacher.png" alt="여니쌤 캐릭터">
         <span>수다쟁이 여니쌤의 뿜뿜 놀이터</span>
       </a>
+      <div class="swa-title-mini" aria-label="현재 책">책 놀이터 · 쏴아아아</div>
       <nav class="swa-nav" aria-label="이동">
         <a href="../../">홈</a>
-        <a href="../../playgrounds/book/">책 놀이터</a>
+        <a href="../../playgrounds/book/">책 놀이터로</a>
       </nav>
     </header>
 
     <main class="swa-app" aria-live="polite">
       <section class="view start-view is-active" data-view="start">
         <div class="hero-card">
-          <p class="kicker">책 놀이터 · 쏴아아아</p>
-          <h1>소리를 그려요</h1>
-          <p class="hero-copy">소리를 듣고, 말하고, 손가락으로 크게 그려 봐요.</p>
+          <div class="hero-copy-block">
+            <p class="kicker">쏴아아아</p>
+            <h1>소리를 그려요</h1>
+            <p class="hero-copy">소리를 보고 듣고, 손가락으로 크게 그려요.</p>
+          </div>
           <div class="hero-scene" aria-hidden="true">
             <svg viewBox="0 0 520 220" role="img">
               <path d="M54 158c56-58 120-64 170-18 38-70 132-81 188-25 33-5 63 17 70 49 7 34-19 64-55 64H89c-36 0-60-35-35-70Z" fill="#e4f5ff"/>
@@ -43,24 +46,25 @@
           <div class="start-actions">
             <button class="primary-action" type="button" data-open-view="curious">소리 궁금해</button>
             <button class="primary-action game-action" type="button" data-open-view="game">게임 시작</button>
+            <a class="primary-link" href="../../playgrounds/book/">책 놀이터로</a>
+            <a class="primary-link" href="../../">홈</a>
           </div>
         </div>
       </section>
 
       <section class="view study-view" data-view="curious">
-        <div class="activity-layout">
-          <aside class="word-strip" aria-label="소리 목록" data-word-list="curious"></aside>
-          <article class="activity-card">
-            <div class="activity-head">
-              <div>
-                <p class="kicker">소리 궁금해</p>
-                <h2 data-curious-word>쏴아아아</h2>
-              </div>
-              <button class="speak-button" type="button" data-speak-current>읽어주기</button>
+        <div class="activity-card study-card">
+          <div class="activity-head">
+            <div>
+              <p class="kicker">소리 궁금해</p>
+              <h2 data-curious-word>쏴아아아</h2>
             </div>
+            <button class="speak-button" type="button" data-speak-current>읽어주기</button>
+          </div>
 
+          <div class="study-content">
+            <aside class="word-strip" aria-label="소리 목록" data-word-list="curious"></aside>
             <div class="scene-card" data-scene></div>
-
             <div class="info-grid">
               <section class="info-panel">
                 <strong>낱말 보기</strong>
@@ -75,47 +79,59 @@
                 <p data-word-example>비가 쏴아아아 내려요.</p>
               </section>
             </div>
+          </div>
 
-            <div class="activity-buttons">
-              <button type="button" data-prev>이전</button>
-              <button type="button" data-open-view="start">처음</button>
-              <button type="button" data-next>다음</button>
-            </div>
-          </article>
+          <div class="activity-buttons">
+            <button type="button" data-prev>← 이전 소리</button>
+            <button type="button" data-open-view="game">게임 시작</button>
+            <button type="button" data-next>다음 소리 →</button>
+            <a href="../../playgrounds/book/">책 놀이터로</a>
+            <a href="../../">홈</a>
+          </div>
         </div>
       </section>
 
       <section class="view game-view" data-view="game">
-        <div class="activity-layout">
-          <aside class="word-strip" aria-label="소리 목록" data-word-list="game"></aside>
-          <article class="activity-card game-card">
-            <div class="activity-head">
-              <div>
-                <p class="kicker">게임 시작</p>
-                <h2 data-game-word>쏴아아아</h2>
-              </div>
+        <div class="activity-card game-card">
+          <div class="activity-head game-head">
+            <div>
+              <p class="kicker">게임 시작</p>
+              <h2 data-game-word>쏴아아아</h2>
+            </div>
+            <div class="game-tools">
               <button class="speak-button" type="button" data-speak-current>읽어주기</button>
-            </div>
-
-            <div class="draw-area">
-              <div class="example-card">
-                <strong>말랑이 예시 보기</strong>
-                <div class="example-lines" data-example></div>
-                <p data-draw-hint>굵고 긴 선으로 세찬 비를 그려 봐요.</p>
-              </div>
-              <div class="canvas-card">
-                <canvas id="soundCanvas" width="760" height="420" aria-label="소리를 손가락으로 그리는 칸"></canvas>
+              <div class="hint-wrap">
+                <button class="hint-button" type="button" data-toggle-hint>말랑이 힌트</button>
+                <div class="hint-bubble" data-hint-bubble aria-live="polite">
+                  굵고 긴 선을 여러 개 그리면 비가 많이 오는 느낌이 나요.
+                </div>
               </div>
             </div>
+          </div>
 
-            <div class="activity-buttons">
-              <button type="button" data-clear>다시 그리기</button>
-              <button type="button" data-finish>완성</button>
-              <button type="button" data-animate>움직이기</button>
-              <button type="button" data-prev>이전</button>
-              <button type="button" data-next>다음</button>
+          <div class="game-stage" data-effect-stage>
+            <div class="sound-effect-layer" data-effect-layer aria-hidden="true"></div>
+            <div class="canvas-card">
+              <p class="canvas-guide">손가락으로 소리를 그려요</p>
+              <canvas id="soundCanvas" width="960" height="520" aria-label="소리를 손가락으로 그리는 칸"></canvas>
             </div>
-          </article>
+            <aside class="example-popover" data-example-panel aria-label="말랑이 예시">
+              <button class="example-close" type="button" data-toggle-example aria-label="예시 닫기">×</button>
+              <strong>말랑이 예시</strong>
+              <div class="example-lines" data-example></div>
+              <p data-draw-hint>굵고 긴 선으로 세찬 비를 그려 봐요.</p>
+            </aside>
+          </div>
+
+          <div class="activity-buttons game-buttons">
+            <button type="button" data-prev>← 이전 소리</button>
+            <button type="button" data-clear>다시 그리기</button>
+            <button class="finish-button" type="button" data-finish>완성</button>
+            <button type="button" data-next>다음 소리 →</button>
+            <button type="button" data-toggle-example>말랑이 예시</button>
+            <a href="../../playgrounds/book/">책 놀이터로</a>
+            <a href="../../">홈</a>
+          </div>
         </div>
       </section>
     </main>

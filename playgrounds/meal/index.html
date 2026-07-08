@@ -61,7 +61,7 @@
     }
 
     .meal-action:active,
-    .meal-menu-card:active {
+    .meal-menu-button:active {
       transform: translateY(3px);
       box-shadow: 0 3px 0 rgba(95, 114, 143, 0.12);
     }
@@ -111,11 +111,85 @@
     }
 
     .meal-menu-card {
+      position: relative;
       min-height: 88px;
       display: grid;
       place-items: center;
       text-align: center;
       background: linear-gradient(145deg, #fff7df, #f2fbf6);
+      cursor: default;
+      transition: transform 160ms ease, box-shadow 160ms ease, background-color 160ms ease;
+    }
+
+    .meal-menu-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 0 rgba(95, 114, 143, 0.12), 0 14px 26px rgba(95, 114, 143, 0.14);
+      background: linear-gradient(145deg, #fff2cf, #eaf8f0);
+    }
+
+    .meal-menu-card.is-crowned {
+      background: linear-gradient(145deg, #fff0b9, #fff9e6);
+      box-shadow: 0 10px 0 rgba(176, 135, 54, 0.18), 0 16px 28px rgba(176, 135, 54, 0.16);
+    }
+
+    .meal-crown {
+      position: absolute;
+      top: -17px;
+      right: 13px;
+      font-size: 34px;
+      filter: drop-shadow(0 5px 4px rgba(95, 114, 143, 0.18));
+      pointer-events: none;
+    }
+
+    .meal-vote-count {
+      display: block;
+      margin-top: 7px;
+      color: #9b6b2f;
+      font-size: clamp(13px, 1.7vw, 18px);
+      font-weight: 1000;
+    }
+
+    .meal-menu-actions {
+      width: 100%;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .meal-menu-button {
+      min-height: 48px;
+      border: 0;
+      border-radius: 16px;
+      color: var(--ink);
+      background: rgba(255, 255, 255, 0.86);
+      box-shadow: 0 5px 0 rgba(95, 114, 143, 0.1);
+      font: inherit;
+      font-size: clamp(15px, 1.9vw, 20px);
+      font-weight: 1000;
+      cursor: pointer;
+    }
+
+    .meal-vote-button {
+      background: #fff1bd;
+    }
+
+    .meal-write-button {
+      background: #dcecf8;
+    }
+
+    .meal-menu-button:hover,
+    .meal-menu-button:focus-visible {
+      outline: none;
+      transform: translateY(-2px);
+    }
+
+    .meal-selected-school {
+      margin: 10px 0 0;
+      color: #526273;
+      font-size: clamp(16px, 1.9vw, 21px);
+      font-weight: 1000;
+      line-height: 1.35;
     }
 
     .meal-status {
@@ -124,6 +198,20 @@
       font-size: clamp(17px, 2.1vw, 23px);
       font-weight: 900;
       line-height: 1.4;
+    }
+
+    .meal-guide-note {
+      margin: 12px 0 0;
+      border: 3px solid rgba(255, 255, 255, 0.9);
+      border-radius: 22px;
+      background: linear-gradient(145deg, rgba(247, 216, 228, 0.52), rgba(255, 250, 238, 0.92));
+      color: #3f4f62;
+      padding: 12px 15px;
+      font-size: clamp(18px, 2.2vw, 25px);
+      font-weight: 1000;
+      line-height: 1.35;
+      box-shadow: 0 7px 0 rgba(95, 114, 143, 0.08);
+      word-break: keep-all;
     }
 
     .meal-selected-word {
@@ -244,12 +332,16 @@
           <button class="meal-action" type="button" id="schoolSearchButton">학교 찾기</button>
           <button class="meal-action" type="button" id="mealSearchButton">급식 보기</button>
         </div>
+        <p class="meal-guide-note meal-hidden" id="dateGuide">날짜를 고른 뒤 급식 보기를 눌러요.</p>
         <p class="meal-status" id="status" aria-live="polite">학교 이름을 쓰고, 학교 찾기를 눌러 주세요.</p>
+        <p class="meal-selected-school meal-hidden" id="selectedSchoolSummary"></p>
+        <p class="meal-guide-note meal-hidden" id="schoolPickGuide">학교를 고른 뒤, 날짜를 선택하고 급식 보기를 눌러 주세요.</p>
         <div class="school-results" id="schoolResults"></div>
       </section>
 
       <section class="meal-panel meal-hidden" id="menuPanel" aria-label="급식 메뉴 고르기">
         <p class="kicker" id="menuTitle">오늘의 급식</p>
+        <p class="meal-guide-note">좋아하는 반찬은 왕관 투표를 눌러요. 따라 쓰고 싶으면 따라쓰기 버튼을 눌러요.</p>
         <div class="meal-menu-grid" id="menuGrid"></div>
       </section>
 
@@ -276,10 +368,15 @@
     let canvas;
     let context;
     let isDrawing = false;
+    let currentMenuItems = [];
+    let currentMealKey = "";
 
     const schoolInput = document.getElementById("schoolInput");
     const mealDate = document.getElementById("mealDate");
     const statusEl = document.getElementById("status");
+    const dateGuide = document.getElementById("dateGuide");
+    const schoolPickGuide = document.getElementById("schoolPickGuide");
+    const selectedSchoolSummary = document.getElementById("selectedSchoolSummary");
     const schoolResults = document.getElementById("schoolResults");
     const menuPanel = document.getElementById("menuPanel");
     const menuTitle = document.getElementById("menuTitle");
@@ -320,7 +417,11 @@
       }
 
       selectedSchool = null;
+      selectedSchoolSummary.classList.add("meal-hidden");
+      selectedSchoolSummary.textContent = "";
       schoolResults.innerHTML = "";
+      dateGuide.classList.add("meal-hidden");
+      schoolPickGuide.classList.add("meal-hidden");
       menuPanel.classList.add("meal-hidden");
       writePanel.classList.add("meal-hidden");
       setStatus("학교를 찾고 있어요.");
@@ -333,6 +434,7 @@
 
         if (!rows.length) {
           setStatus("학교를 찾지 못했어요. 학교 이름을 조금 다르게 써 보세요.");
+          schoolPickGuide.classList.add("meal-hidden");
           return;
         }
 
@@ -359,15 +461,22 @@
         });
 
         setStatus("내 학교를 골라 주세요.");
+        schoolPickGuide.classList.remove("meal-hidden");
       } catch (error) {
         console.error(error);
+        schoolPickGuide.classList.add("meal-hidden");
         setStatus("학교 정보를 불러오지 못했어요. 잠시 뒤 다시 해 주세요.");
       }
     }
 
     function selectSchool(school) {
       selectedSchool = school;
-      setStatus(`${school.name}을 골랐어요. 날짜를 고르고 급식 보기를 눌러 주세요.`);
+      dateGuide.classList.remove("meal-hidden");
+      schoolPickGuide.classList.add("meal-hidden");
+      schoolResults.innerHTML = "";
+      selectedSchoolSummary.textContent = "학교를 골랐어요. 날짜를 확인하고 급식 보기를 눌러요.";
+      selectedSchoolSummary.classList.remove("meal-hidden");
+      setStatus("날짜를 고르고 급식 보기를 눌러 주세요.");
       speakOnce(`${school.name}을 골랐어요.`);
     }
 
@@ -386,6 +495,8 @@
       setStatus("급식 메뉴를 찾고 있어요.");
       menuGrid.innerHTML = "";
       writePanel.classList.add("meal-hidden");
+      schoolResults.innerHTML = "";
+      schoolPickGuide.classList.add("meal-hidden");
 
       try {
         const ymd = dateValue.replaceAll("-", "");
@@ -409,22 +520,89 @@
           return;
         }
 
+        currentMenuItems = menuItems;
+        currentMealKey = `${selectedSchool.officeCode}-${selectedSchool.schoolCode}-${ymd}`;
         menuTitle.textContent = `${formatDate(ymd)} 급식 메뉴`;
-        menuItems.forEach((item) => {
-          const button = document.createElement("button");
-          button.className = "meal-menu-card";
-          button.type = "button";
-          button.innerHTML = `<strong>${item}</strong>`;
-          button.addEventListener("click", () => openWriting(item));
-          menuGrid.appendChild(button);
-        });
+        renderMenuCards();
 
         menuPanel.classList.remove("meal-hidden");
-        setStatus("따라 써 보고 싶은 급식 메뉴를 눌러 주세요.");
+        selectedSchoolSummary.classList.add("meal-hidden");
+        setStatus("가장 맛있는 메뉴를 눌러 왕관을 올려 보세요.");
+        menuPanel.scrollIntoView({ behavior: "smooth", block: "start" });
       } catch (error) {
         console.error(error);
         setStatus("급식 정보를 불러오지 못했어요. 잠시 뒤 다시 해 주세요.");
       }
+    }
+
+    function getVoteStorageKey() {
+      return `ppumppum-meal-votes-${currentMealKey}`;
+    }
+
+    function loadMealVotes() {
+      if (!currentMealKey) return {};
+      try {
+        const saved = JSON.parse(localStorage.getItem(getVoteStorageKey()));
+        return saved && typeof saved === "object" ? saved : {};
+      } catch (error) {
+        console.warn(error);
+        return {};
+      }
+    }
+
+    function saveMealVotes(votes) {
+      if (!currentMealKey) return;
+      localStorage.setItem(getVoteStorageKey(), JSON.stringify(votes));
+    }
+
+    function getCrownedMenu(votes) {
+      let crown = "";
+      let highScore = 0;
+      currentMenuItems.forEach((item) => {
+        const score = Number(votes[item] || 0);
+        if (score > highScore) {
+          highScore = score;
+          crown = item;
+        }
+      });
+      return { crown, highScore };
+    }
+
+    function voteMenu(item) {
+      const votes = loadMealVotes();
+      votes[item] = Number(votes[item] || 0) + 1;
+      saveMealVotes(votes);
+      renderMenuCards();
+    }
+
+    function renderMenuCards() {
+      const votes = loadMealVotes();
+      const { crown, highScore } = getCrownedMenu(votes);
+      menuGrid.innerHTML = "";
+
+      currentMenuItems.forEach((item) => {
+        const count = Number(votes[item] || 0);
+        const isCrowned = item === crown && highScore > 0;
+        const card = document.createElement("article");
+        card.className = `meal-menu-card${isCrowned ? " is-crowned" : ""}`;
+        card.innerHTML = `
+          ${isCrowned ? '<span class="meal-crown" aria-hidden="true">👑</span>' : ""}
+          <strong>${item}</strong>
+          <span class="meal-vote-count">${count > 0 ? `좋아요 ${count}` : "눌러서 왕관 올리기"}</span>
+          <div class="meal-menu-actions">
+            <button class="meal-menu-button meal-vote-button" type="button">👑 왕관 투표</button>
+            <button class="meal-menu-button meal-write-button" type="button">✏️ 따라쓰기</button>
+          </div>
+        `;
+        card.querySelector(".meal-vote-button").addEventListener("click", () => {
+          voteMenu(item);
+          setStatus(`${item}에 왕관 투표를 했어요.`);
+        });
+        card.querySelector(".meal-write-button").addEventListener("click", () => {
+          openWriting(item);
+        });
+        menuGrid.appendChild(card);
+      });
     }
 
     async function fetchXml(url) {

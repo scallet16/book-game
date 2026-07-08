@@ -3,57 +3,73 @@ const soundWords = [
     word: "쏴아아아",
     desc: "비가 아주 세게 내리는 소리예요.",
     example: "비가 쏴아아아 내려요.",
-    hint: "굵고 긴 선으로 세찬 비를 그려 봐요.",
-    scene: "rain"
+    hint: "굵고 긴 선을 여러 개 그리면 비가 많이 오는 느낌이 나요.",
+    finish: "와, 비가 쏴아아아 내리는 것 같아요!",
+    scene: "rain",
+    effect: "rain"
   },
   {
     word: "주르륵",
     desc: "물이나 눈물이 길게 흘러내리는 소리예요.",
     example: "창문에 빗물이 주르륵 흘러요.",
-    hint: "아래로 길게 흐르는 선을 그려 봐요.",
-    scene: "stream"
+    hint: "위에서 아래로 길게 흘러내리는 선을 그려 봐요.",
+    finish: "물이 주르륵 흘러내리는 것 같아요!",
+    scene: "stream",
+    effect: "stream"
   },
   {
     word: "졸졸졸",
     desc: "물이 작고 부드럽게 흐르는 소리예요.",
     example: "시냇물이 졸졸졸 흘러요.",
-    hint: "작은 물결을 이어서 그려 봐요.",
-    scene: "brook"
+    hint: "작은 물결선을 옆으로 이어 그려 봐요.",
+    finish: "작은 물이 졸졸졸 흐르는 느낌이에요!",
+    scene: "brook",
+    effect: "brook"
   },
   {
     word: "톡톡",
     desc: "작은 물방울이 가볍게 떨어지는 소리예요.",
     example: "빗방울이 창문을 톡톡 두드려요.",
-    hint: "작은 점을 톡톡 찍어 봐요.",
-    scene: "tap"
+    hint: "작은 점을 띄엄띄엄 찍어 봐요.",
+    finish: "물방울이 톡톡 떨어지는 것 같아요!",
+    scene: "tap",
+    effect: "tap"
   },
   {
     word: "통통",
     desc: "가볍게 튀거나 두드리는 소리예요.",
     example: "공이 통통 튀어요.",
-    hint: "동그라미가 튀는 길을 그려 봐요.",
-    scene: "bounce"
+    hint: "위아래로 튀는 동그라미를 그려 봐요.",
+    finish: "그림이 통통 튀는 느낌이에요!",
+    scene: "bounce",
+    effect: "bounce"
   },
   {
     word: "풍덩",
     desc: "큰 것이 물에 빠지는 소리예요.",
     example: "돌멩이가 물에 풍덩 빠졌어요.",
-    hint: "크게 튀는 물 모양을 그려 봐요.",
-    scene: "splash"
+    hint: "큰 동그라미와 물결을 그려 봐요.",
+    finish: "물이 풍덩 하고 퍼지는 것 같아요!",
+    scene: "splash",
+    effect: "splash"
   },
   {
     word: "첨벙",
     desc: "물속에 들어가며 물이 튀는 소리예요.",
     example: "발이 물웅덩이에 첨벙 들어갔어요.",
-    hint: "발 주변으로 튀는 물을 그려 봐요.",
-    scene: "puddle"
+    hint: "가운데에서 밖으로 튀는 선을 그려 봐요.",
+    finish: "물이 첨벙 튀는 느낌이에요!",
+    scene: "puddle",
+    effect: "puddle"
   },
   {
     word: "찰싹찰싹",
     desc: "물이 넓은 곳에 부딪치는 소리예요.",
     example: "파도가 바위에 찰싹찰싹 부딪쳐요.",
-    hint: "옆으로 밀려오는 물결을 그려 봐요.",
-    scene: "wave"
+    hint: "넓은 파도선을 크게 그려 봐요.",
+    finish: "파도가 찰싹찰싹 움직이는 것 같아요!",
+    scene: "wave",
+    effect: "wave"
   }
 ];
 
@@ -61,7 +77,8 @@ const state = {
   view: "start",
   index: 0,
   drawing: false,
-  lastPoint: null
+  lastPoint: null,
+  savedImage: null
 };
 
 const views = document.querySelectorAll("[data-view]");
@@ -74,8 +91,13 @@ const wordExample = document.querySelector("[data-word-example]");
 const sceneSlot = document.querySelector("[data-scene]");
 const exampleSlot = document.querySelector("[data-example]");
 const drawHint = document.querySelector("[data-draw-hint]");
+const effectStage = document.querySelector("[data-effect-stage]");
+const hintBubble = document.querySelector("[data-hint-bubble]");
+const examplePanel = document.querySelector("[data-example-panel]");
 const canvas = document.getElementById("soundCanvas");
 const ctx = canvas.getContext("2d");
+
+const effectClasses = soundWords.map((item) => `effect-${item.effect}`);
 
 function svgForScene(type) {
   const scenes = {
@@ -108,8 +130,10 @@ function svgForExample(type) {
 function showView(name) {
   state.view = name;
   views.forEach((view) => view.classList.toggle("is-active", view.dataset.view === name));
+  closeHint();
+  closeExample();
   if (name === "game") {
-    requestAnimationFrame(resizeCanvas);
+    requestAnimationFrame(() => resizeCanvas(true));
   }
 }
 
@@ -139,10 +163,14 @@ function renderCurrent() {
   wordDesc.textContent = item.desc;
   wordExample.textContent = item.example;
   drawHint.textContent = item.hint;
+  hintBubble.textContent = item.hint;
   sceneSlot.innerHTML = svgForScene(item.scene);
   exampleSlot.innerHTML = svgForExample(item.scene);
   renderWordLists();
+  clearEffect();
   clearCanvas();
+  closeHint();
+  closeExample();
 }
 
 function move(delta) {
@@ -150,32 +178,56 @@ function move(delta) {
   renderCurrent();
 }
 
-function speakCurrent() {
-  const item = soundWords[state.index];
+function speakText(text) {
   if (!("speechSynthesis" in window)) return;
   window.speechSynthesis.cancel();
-  const utterance = new SpeechSynthesisUtterance(`${item.word}. ${item.desc}. ${item.example}`);
+  const utterance = new SpeechSynthesisUtterance(text);
   utterance.lang = "ko-KR";
   utterance.rate = 0.82;
   window.speechSynthesis.speak(utterance);
 }
 
-function resizeCanvas() {
+function speakCurrent() {
+  const item = soundWords[state.index];
+  speakText(`${item.word}. ${item.desc}. ${item.example}`);
+}
+
+function resizeCanvas(restore = false) {
+  const previous = restore ? snapshotCanvas() : null;
   const rect = canvas.getBoundingClientRect();
   const ratio = window.devicePixelRatio || 1;
   canvas.width = Math.max(1, Math.floor(rect.width * ratio));
   canvas.height = Math.max(1, Math.floor(rect.height * ratio));
   ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
-  clearCanvas();
+  setupBrush();
+  if (previous) {
+    const image = new Image();
+    image.onload = () => ctx.drawImage(image, 0, 0, rect.width, rect.height);
+    image.src = previous;
+  }
+}
+
+function snapshotCanvas() {
+  try {
+    return canvas.toDataURL("image/png");
+  } catch {
+    return null;
+  }
+}
+
+function setupBrush() {
+  ctx.lineWidth = 12;
+  ctx.lineCap = "round";
+  ctx.lineJoin = "round";
+  ctx.strokeStyle = "#4f9dd8";
 }
 
 function clearCanvas() {
   const rect = canvas.getBoundingClientRect();
   ctx.clearRect(0, 0, rect.width, rect.height);
-  ctx.lineWidth = 12;
-  ctx.lineCap = "round";
-  ctx.lineJoin = "round";
-  ctx.strokeStyle = "#4f9dd8";
+  setupBrush();
+  state.savedImage = null;
+  clearEffect();
 }
 
 function pointFromEvent(event) {
@@ -188,6 +240,8 @@ function pointFromEvent(event) {
 
 function startDrawing(event) {
   event.preventDefault();
+  clearEffect();
+  closeHint();
   canvas.setPointerCapture(event.pointerId);
   state.drawing = true;
   state.lastPoint = pointFromEvent(event);
@@ -211,18 +265,34 @@ function stopDrawing(event) {
   state.lastPoint = null;
 }
 
+function clearEffect() {
+  effectStage.classList.remove(...effectClasses);
+}
+
 function markFinished() {
-  document.body.classList.remove("finished");
+  const item = soundWords[state.index];
+  state.savedImage = snapshotCanvas();
+  clearEffect();
   window.requestAnimationFrame(() => {
-    document.body.classList.add("finished");
+    effectStage.classList.add(`effect-${item.effect}`);
+    speakText(item.finish);
   });
 }
 
-function animateCanvas() {
-  document.body.classList.remove("moving");
-  window.requestAnimationFrame(() => {
-    document.body.classList.add("moving");
-  });
+function toggleHint() {
+  hintBubble.classList.toggle("is-open");
+}
+
+function closeHint() {
+  hintBubble.classList.remove("is-open");
+}
+
+function toggleExample() {
+  examplePanel.classList.toggle("is-open");
+}
+
+function closeExample() {
+  examplePanel.classList.remove("is-open");
 }
 
 document.querySelectorAll("[data-open-view]").forEach((button) => {
@@ -243,14 +313,19 @@ document.querySelectorAll("[data-speak-current]").forEach((button) => {
 
 document.querySelector("[data-clear]").addEventListener("click", clearCanvas);
 document.querySelector("[data-finish]").addEventListener("click", markFinished);
-document.querySelector("[data-animate]").addEventListener("click", animateCanvas);
+document.querySelectorAll("[data-toggle-hint]").forEach((button) => {
+  button.addEventListener("click", toggleHint);
+});
+document.querySelectorAll("[data-toggle-example]").forEach((button) => {
+  button.addEventListener("click", toggleExample);
+});
 
 canvas.addEventListener("pointerdown", startDrawing);
 canvas.addEventListener("pointermove", draw);
 canvas.addEventListener("pointerup", stopDrawing);
 canvas.addEventListener("pointercancel", stopDrawing);
 canvas.addEventListener("lostpointercapture", stopDrawing);
-window.addEventListener("resize", resizeCanvas);
+window.addEventListener("resize", () => resizeCanvas(true));
 
 renderCurrent();
 resizeCanvas();
